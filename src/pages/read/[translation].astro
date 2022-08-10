@@ -1,0 +1,21 @@
+---
+import Base from "../../layouts/base.astro";
+import codes from "../../data/codes";
+
+export function getStaticPaths(){
+   return codes.map(
+      code => ({
+         params: {
+            translation: code
+         }
+      })
+   );
+};
+
+
+const { translation } = Astro.params
+---
+
+<Base title={translation as string}>
+
+</Base>
