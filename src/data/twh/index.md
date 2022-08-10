@@ -1,9 +1,13 @@
+---
 Author:     Epictetus  
 Title:      Enchiridion  
 Translator: T.W. Higginson  
 Date:       1865  
-Source:     [tufts.edu](http://www.perseus.tufts.edu/hopper/text?doc=urn:cts:greekLit:tlg0557.tlg002.perseus-eng2:1)  
+Source:
+   label: tufts.edu
+   url: http://www.perseus.tufts.edu/hopper/text?doc=urn:cts:greekLit:tlg0557.tlg002.perseus-eng2:1
 Code:       twh  
+---
 
 ## 1
 

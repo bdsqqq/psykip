@@ -1,9 +1,13 @@
+---
 Author:     Epictetus  
 Title:      The Enchiridion  
 Translator: P.E. Matheson
 Date:       1916  
-Source:     [letsreadgreek.com](http://www.letsreadgreek.com/epictetus/mattheson.htm)  
+Source:
+   label: letsreadgreek.com
+   url: http://www.letsreadgreek.com/epictetus/mattheson.htm
 Code:       pem  
+---
 
 ## 1
 

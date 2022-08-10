@@ -3,7 +3,9 @@ Author:     Epictetus
 Title:      Εγχειρίδιον  
 Translator: Epictetus  
 Date:       0135  
-Source:     https://el.wikisource.org/wiki/%CE%95%CE%B3%CF%87%CE%B5%CE%B9%CF%81%CE%AF%CE%B4%CE%B9%CE%BF%CE%BD 
+Source:
+   label: el.wikisource.org
+   url: https://el.wikisource.org/wiki/%CE%95%CE%B3%CF%87%CE%B5%CE%B9%CF%81%CE%AF%CE%B4%CE%B9%CE%BF%CE%BD 
 Code:       e  
 ---
 

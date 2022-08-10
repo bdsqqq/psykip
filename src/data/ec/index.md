@@ -1,9 +1,13 @@
+---
 Author:     Epictetus  
 Title:      The Enchiridion  
 Translator: Elizabeth Carter  
 Date:       1750  
-Source:     [mit.edu](http://classics.mit.edu/Epictetus/epicench.html)  
+Source:
+   label: mit.edu
+   url: http://classics.mit.edu/Epictetus/epicench.html
 Code:       ec  
+---
 
 ## 1
 

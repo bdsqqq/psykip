@@ -1,9 +1,13 @@
+---
 Author:     Epictetus  
 Title:      The Encheiridion, or Manual  
 Translator: William Abbott Oldfather  
 Date:       1928  
-Source:     [en.wikisource.org](https://en.wikisource.org/wiki/Epictetus,_the_Discourses_as_reported_by_Arrian,_the_Manual,_and_Fragments/Manual)  
+Source: 
+   label: en.wikisource.org
+   url: https://en.wikisource.org/wiki/Epictetus,_the_Discourses_as_reported_by_Arrian,_the_Manual,_and_Fragments/Manual 
 Code:       wao  
+---
 
 ## 1
 
