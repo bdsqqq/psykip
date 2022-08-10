@@ -1,19 +1,7 @@
 ---
 import Base from "../layouts/base.astro"
-import codes from "../data/codes"
-
-// combination of every code and every code
-const codeCombinations = codes.map(code => {
-  return codes.map(code2 => {
-	if(code !== code2) return `${code}/${code2}`
-  }).filter(code => code !== undefined)
-}).reduce((acc, curr) => acc.concat(curr), [])
-
-console.log(codeCombinations)
 ---
 
 <Base title="home">
-	<div>
-		hej do
-	</div>
+	<a href="/read">Read</a>
 </Base>
