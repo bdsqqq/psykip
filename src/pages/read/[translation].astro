@@ -1,4 +1,5 @@
 ---
+import type { MarkdownInstance} from "astro" 
 import Base from "../../layouts/base.astro";
 import codes from "../../data/codes";
 
@@ -12,10 +13,26 @@ export function getStaticPaths(){
    );
 };
 
-
 const { translation } = Astro.params
+
+interface Frontmatter {
+   Author:     string;  
+   Title:      string;  
+   Translator: string; 
+   Date:       string; 
+   Source:     string; 
+   Code:       string;
+}
+
+const MDS = await Astro.glob<Frontmatter>("../../data/**/index.md");
+const MD = MDS.find(MD => MD.frontmatter.Code === translation) as MarkdownInstance<Frontmatter>;
 ---
 
-<Base title={translation as string}>
-
+<Base title={MD.frontmatter.Author}>
+   {MDS.map(md => {
+      const { frontmatter } = md;
+      return (
+         <div>{JSON.stringify(frontmatter)}</div>
+      );
+   })}
 </Base>
