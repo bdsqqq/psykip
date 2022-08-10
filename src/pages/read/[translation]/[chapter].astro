@@ -1,0 +1,45 @@
+---
+import type { MarkdownInstance} from "astro" 
+import Base from "../../../layouts/base.astro";
+import codes from "../../../data/codes";
+
+export function getStaticPaths(){
+   return codes.map(code => ({
+      params: {
+         translation: code
+      }
+   })).flatMap(path => {
+      let aux = []
+      for (let i = 1; i <= 53; i++) {
+         aux.push({
+            params: {
+               ...path.params,
+               chapter: i.toString()
+            }
+         })
+      }
+      return aux
+   })
+};
+
+const { translation, chapter } = Astro.params
+
+interface Frontmatter {
+   Author:     string;  
+   Title:      string;  
+   Translator: string; 
+   Date:       string; 
+   Source:     {
+      label: string;
+      url: string;
+   };
+   Code:       string;
+}
+
+const MD = await import(`../../../data/${translation}/chapters/${chapter}.md`) as MarkdownInstance<Frontmatter>;
+---
+
+<Base title={MD.frontmatter.Author}>
+   <a href={MD.frontmatter.Source.url}>{MD.frontmatter.Source.label}</a>
+   <MD.Content />
+</Base>
