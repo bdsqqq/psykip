@@ -24,15 +24,9 @@ interface Frontmatter {
    Code:       string;
 }
 
-const MDS = await Astro.glob<Frontmatter>("../../data/**/index.md");
-const MD = MDS.find(MD => MD.frontmatter.Code === translation) as MarkdownInstance<Frontmatter>;
+const MD = await import(`../../data/${translation}/index.md`) as MarkdownInstance<Frontmatter>;
 ---
 
 <Base title={MD.frontmatter.Author}>
-   {MDS.map(md => {
-      const { frontmatter } = md;
-      return (
-         <div>{JSON.stringify(frontmatter)}</div>
-      );
-   })}
+   <MD.Content />
 </Base>
