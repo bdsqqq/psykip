@@ -10,6 +10,7 @@ export function getStaticPaths(){
       }
    })).flatMap(path => {
       let aux = []
+      // 53 is a magic number taken from the number of chapters the book has, so I'm pretty confident it will not change and break stuff
       for (let i = 1; i <= 53; i++) {
          aux.push({
             params: {
