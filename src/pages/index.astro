@@ -1,18 +1,45 @@
 ---
 import Base from "../layouts/base.astro";
 import epictetus from "../../public/img/dither_epictetus_no_bg.png";
+
+import { Icon } from "astro-icon";
 ---
 
 <Base title="home">
-  <div class="flex flex-col justify-center h-full">
-    <h1 class="uppercase text-6xl">the Manual on how to live</h1>
-    <p>a book to keep always ready to hand.</p>
+  <div
+    class="grid lg:grid-cols-[repeat(16,1fr)] lg:grid-rows-4 gap-4 px-4 justify-center h-full"
+  >
+    <div class="col-start-1 col-end-8 row-start-2">
+      <h1 class="inline uppercase text-6xl font-bold">the Manual</h1>
+      <span class="inline"
+        >on how to live, a book to keep always ready to hand.
+      </span>
+    </div>
 
-    <p>
-      The <strong>Enchiridion</strong> is a collection of stoic ethical advice compiled
-      by Arrian, based on the Discourses of Epictetus.
-    </p>
-    <img src={epictetus} />
-    <a href="/read">Read</a>
+    <div class="flex flex-col gap-8 col-start-1 col-end-6 row-start-3">
+      <p>
+        The <strong>Enchiridion</strong> is a collection of stoic ethical advice
+        compiled by Arrian, based on the Discourses of Epictetus.
+      </p>
+      <a
+        class="flex gap-1 items-center p-2 -ml-2 w-min underline underline-offset-2 outline-none focus:ring ring-zinc-900 ring-offset-zinc-100 ring-offset-2 group"
+        href="/read"
+        >Read <Icon
+          class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-hover:translate-x-1"
+          name="radix-icons:arrow-right"
+        />
+      </a>
+    </div>
+    <div
+      class="col-start-10 col-end-[16] row-start-[-1] row-end-1 self-end justify-self-end"
+    >
+      <figure class="relative aspect-[3/4] max-h-[40vh] lg:max-h-[70vh]">
+        <img
+          class="h-full w-full object-cover"
+          src={epictetus}
+          alt="stoic philosopher Epictetus"
+        />
+      </figure>
+    </div>
   </div>
 </Base>
