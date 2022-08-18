@@ -4,8 +4,6 @@ import type { Frontmatter } from "./[translation]/[chapter].astro";
 
 const MDs = await Astro.glob<Frontmatter>("../../data/**/index.md");
 const frontmatters = MDs.map((MD) => MD.frontmatter);
-
-console.log(frontmatters.map((frontmatter) => frontmatter.Code));
 ---
 
 <Base title="Read">
