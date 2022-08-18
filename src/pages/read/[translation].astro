@@ -2,6 +2,7 @@
 import type { MarkdownInstance } from "astro";
 import Base from "../../layouts/base.astro";
 import codes from "../../data/codes";
+import { Icon } from "astro-icon";
 
 export function getStaticPaths() {
   return codes.map((code) => ({
@@ -44,13 +45,24 @@ console.log(MDs);
 ---
 
 <Base title={MD.frontmatter.Author}>
-  <a href={MD.frontmatter.Source.url}>{MD.frontmatter.Source.label}</a>
+  <div class="flex flex-col gap-24 px-12 py-16 max-w-prose">
+    {
+      MDs.map((MD, i) => (
+        <div class="">
+          <MD.Content key={i} />
+        </div>
+      ))
+    }
 
-  {
-    MDs.map((MD, i) => (
-      <div>
-        <MD.Content key={i} />
-      </div>
-    ))
-  }
+    <footer>
+      The source of this translation is <a
+        class="underline underline-offset-2 outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100"
+        href={MD.frontmatter.Source.url}
+        >{MD.frontmatter.Source.label}<Icon
+          class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px]"
+          name="radix-icons:arrow-top-right"
+        />
+      </a>
+    </footer>
+  </div>
 </Base>
