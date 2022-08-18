@@ -44,12 +44,14 @@ const MDs = await Promise.all(
 ---
 
 <Base title={frontmatter.Author}>
-  <div class="flex flex-col gap-24 px-12 py-16 max-w-prose">
+  <div class="flex flex-col gap-24 px-12 py-16">
     {
       MDs.map((MD, i) => (
-        <Chapter>
-          <MD.Content key={i} />
-        </Chapter>
+        <div class="mx-auto">
+          <Chapter>
+            <MD.Content key={i} />
+          </Chapter>
+        </div>
       ))
     }
 

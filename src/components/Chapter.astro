@@ -1,11 +1,20 @@
 ---
 ---
 
-<div class="chapter-markdown">
+<div class="c">
   <slot />
 </div>
 <style is:global>
-  .chapter-markdown h2 {
-    @apply text-2xl font-bold;
+  .c {
+    @apply grid relative grid-cols-[3fr,13fr] w-fit gap-y-4;
+  }
+  .c h2 {
+    @apply text-2xl font-thin col-start-1 sticky top-2 h-min;
+  }
+  .c > * {
+    @apply col-start-2;
+  }
+  .c > p {
+    @apply first-of-type:first-letter:text-2xl first-of-type:first-letter:font-thin max-w-prose;
   }
 </style>
