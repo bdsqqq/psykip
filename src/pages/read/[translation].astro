@@ -3,6 +3,7 @@ import type { MarkdownInstance } from "astro";
 import Base from "../../layouts/base.astro";
 import codes from "../../data/codes";
 import { Icon } from "astro-icon";
+import Chapter from "../../components/Chapter.astro";
 
 export function getStaticPaths() {
   return codes.map((code) => ({
@@ -46,9 +47,9 @@ const MDs = await Promise.all(
   <div class="flex flex-col gap-24 px-12 py-16 max-w-prose">
     {
       MDs.map((MD, i) => (
-        <div>
+        <Chapter>
           <MD.Content key={i} />
-        </div>
+        </Chapter>
       ))
     }
 
