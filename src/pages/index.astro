@@ -31,10 +31,11 @@ import { Icon } from "astro-icon";
       </a>
     </div>
     <div
-      class="col-start-10 col-end-[16] row-start-[-1] row-end-1 self-end justify-self-end"
+      class="col-start-10 col-end-[16] row-start-[-1] row-end-1 self-end justify-self-end aspect-[3/4] max-h-[40vh] lg:max-h-[70vh]"
     >
-      <figure class="relative aspect-[3/4] max-h-[40vh] lg:max-h-[70vh]">
+      <figure class="relative h-full bg-zinc-200">
         <img
+          loading="eager"
           class="h-full w-full object-cover"
           src={epictetus}
           alt="stoic philosopher Epictetus"
