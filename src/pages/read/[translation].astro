@@ -1,36 +1,56 @@
 ---
-import type { MarkdownInstance} from "astro" 
+import type { MarkdownInstance } from "astro";
 import Base from "../../layouts/base.astro";
 import codes from "../../data/codes";
 
-export function getStaticPaths(){
-   return codes.map(
-      code => ({
-         params: {
-            translation: code
-         }
-      })
-   );
-};
-
-const { translation } = Astro.params
-
-interface Frontmatter {
-   Author:     string;  
-   Title:      string;  
-   Translator: string; 
-   Date:       string; 
-   Source:     {
-      label: string;
-      url: string;
-   };
-   Code:       string;
+export function getStaticPaths() {
+  return codes.map((code) => ({
+    params: {
+      translation: code,
+    },
+  }));
 }
 
-const MD = await import(`../../data/${translation}/index.md`) as MarkdownInstance<Frontmatter>;
+const { translation } = Astro.params;
+
+interface Frontmatter {
+  Author: string;
+  Title: string;
+  Translator: string;
+  Date: string;
+  Source: {
+    label: string;
+    url: string;
+  };
+  Code: string;
+}
+
+const MD = (await import(
+  `../../data/${translation}/index.md`
+)) as MarkdownInstance<Frontmatter>;
+
+const chapters = new Array(53).fill(0).map((_, i) => i + 1);
+
+const MDs = await Promise.all(
+  chapters.map(
+    async (chapter) =>
+      (await import(
+        `../../data/${translation}/chapters/${chapter}.md`
+      )) as MarkdownInstance<Frontmatter>
+  )
+);
+
+console.log(MDs);
 ---
 
 <Base title={MD.frontmatter.Author}>
-   <a href={MD.frontmatter.Source.url}>{MD.frontmatter.Source.label}</a>
-   <MD.Content />
+  <a href={MD.frontmatter.Source.url}>{MD.frontmatter.Source.label}</a>
+
+  {
+    MDs.map((MD, i) => (
+      <div>
+        <MD.Content key={i} />
+      </div>
+    ))
+  }
 </Base>
