@@ -1,46 +1,50 @@
 ---
-import type { MarkdownInstance} from "astro" 
+import type { MarkdownInstance } from "astro";
 import Base from "../../../layouts/base.astro";
 import codes from "../../../data/codes";
 
-export function getStaticPaths(){
-   return codes.map(code => ({
+export function getStaticPaths() {
+  return codes
+    .map((code) => ({
       params: {
-         translation: code
-      }
-   })).flatMap(path => {
-      let aux = []
+        translation: code,
+      },
+    }))
+    .flatMap((path) => {
+      let aux = [];
       // 53 is a magic number taken from the number of chapters the book has, so I'm pretty confident it will not change and break stuff
       for (let i = 1; i <= 53; i++) {
-         aux.push({
-            params: {
-               ...path.params,
-               chapter: i.toString()
-            }
-         })
+        aux.push({
+          params: {
+            ...path.params,
+            chapter: i.toString(),
+          },
+        });
       }
-      return aux
-   })
-};
-
-const { translation, chapter } = Astro.params
-
-interface Frontmatter {
-   Author:     string;  
-   Title:      string;  
-   Translator: string; 
-   Date:       string; 
-   Source:     {
-      label: string;
-      url: string;
-   };
-   Code:       string;
+      return aux;
+    });
 }
 
-const MD = await import(`../../../data/${translation}/chapters/${chapter}.md`) as MarkdownInstance<Frontmatter>;
+const { translation, chapter } = Astro.params;
+
+export interface Frontmatter {
+  Author: string;
+  Title: string;
+  Translator: string;
+  Date: string;
+  Source: {
+    label: string;
+    url: string;
+  };
+  Code: string;
+}
+
+const MD = (await import(
+  `../../../data/${translation}/chapters/${chapter}.md`
+)) as MarkdownInstance<Frontmatter>;
 ---
 
 <Base title={MD.frontmatter.Author}>
-   <a href={MD.frontmatter.Source.url}>{MD.frontmatter.Source.label}</a>
-   <MD.Content />
+  <a href={MD.frontmatter.Source.url}>{MD.frontmatter.Source.label}</a>
+  <MD.Content />
 </Base>
