@@ -26,7 +26,7 @@ interface Frontmatter {
   Code: string;
 }
 
-const MD = (await import(
+const { frontmatter } = (await import(
   `../../data/${translation}/index.md`
 )) as MarkdownInstance<Frontmatter>;
 
@@ -42,11 +42,11 @@ const MDs = await Promise.all(
 );
 ---
 
-<Base title={MD.frontmatter.Author}>
+<Base title={frontmatter.Author}>
   <div class="flex flex-col gap-24 px-12 py-16 max-w-prose">
     {
       MDs.map((MD, i) => (
-        <div class="">
+        <div>
           <MD.Content key={i} />
         </div>
       ))
@@ -55,8 +55,8 @@ const MDs = await Promise.all(
     <footer>
       The source of this translation is <a
         class="underline underline-offset-2 outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100"
-        href={MD.frontmatter.Source.url}
-        >{MD.frontmatter.Source.label}<Icon
+        href={frontmatter.Source.url}
+        >{frontmatter.Source.label}<Icon
           class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px]"
           name="radix-icons:arrow-top-right"
         />
