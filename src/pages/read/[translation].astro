@@ -1,5 +1,6 @@
 ---
 import type { MarkdownInstance } from "astro";
+import type { Frontmatter as ChapterFrontmatter } from "./[translation]/[chapter].astro";
 import Base from "../../layouts/base.astro";
 import codes from "../../data/codes";
 import { Icon } from "astro-icon";
@@ -38,7 +39,7 @@ const MDs = await Promise.all(
     async (chapter) =>
       (await import(
         `../../data/${translation}/chapters/${chapter}.md`
-      )) as MarkdownInstance<Frontmatter>
+      )) as MarkdownInstance<ChapterFrontmatter>
   )
 );
 ---
@@ -48,7 +49,7 @@ const MDs = await Promise.all(
     {
       MDs.map((MD, i) => (
         <div class="mx-auto">
-          <Chapter>
+          <Chapter chapterHead={MD.frontmatter.Chapter}>
             <MD.Content key={i} />
           </Chapter>
         </div>

@@ -1,20 +1,18 @@
 ---
+const { chapterHead } = Astro.props as { chapterHead: string };
 ---
 
-<div class="c">
-  <slot />
+<div class="c grid relative grid-cols-[3fr,13fr] w-fit gap-y-4">
+  <div class="col-start-1 row-start-1 sticky top-2 h-min">
+    <h2 class="text-2xl font-thin">{chapterHead}</h2>
+    <div class="flex flex-col justify-between">toolbar</div>
+  </div>
+  <div class="col-start-2 flex flex-col gap-4 mdContainer">
+    <slot />
+  </div>
 </div>
 <style is:global>
-  .c {
-    @apply grid relative grid-cols-[3fr,13fr] w-fit gap-y-4;
-  }
-  .c h2 {
-    @apply text-2xl font-thin col-start-1 sticky top-2 h-min;
-  }
-  .c > * {
-    @apply col-start-2;
-  }
-  .c > p {
+  .mdContainer > p {
     @apply first-of-type:first-letter:text-2xl first-of-type:first-letter:font-thin max-w-prose;
   }
 </style>
