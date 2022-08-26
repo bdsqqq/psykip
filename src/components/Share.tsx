@@ -25,7 +25,7 @@ export default function Share({
     <div class="relative flex flex-col sm:flex-row items-center gap-1">
       <button
         title="Share"
-        class="-m-2 p-2"
+        class="-m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors"
         onClick={async () => {
           const url = `${appUrl}/read/${translationCode}/${chapterNumber}`;
 

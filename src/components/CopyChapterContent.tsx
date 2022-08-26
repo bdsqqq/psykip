@@ -19,7 +19,7 @@ export default function CopyChapterContent({
     <div class="relative flex flex-col sm:flex-row items-center gap-1">
       <button
         title="Copy chapter content"
-        class="-m-2 p-2"
+        class="-m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors"
         onClick={async () => {
           try {
             await navigator.clipboard.writeText(textContent);
