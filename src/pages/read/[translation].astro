@@ -49,7 +49,11 @@ const MDs = await Promise.all(
     {
       MDs.map((MD, i) => (
         <div class="mx-auto">
-          <Chapter chapterHead={MD.frontmatter.Chapter}>
+          <Chapter
+            translationCode={translation}
+            chapterNumber={(i + 1).toString()}
+            chapterHead={MD.frontmatter.Chapter}
+          >
             <MD.Content key={i} />
           </Chapter>
         </div>

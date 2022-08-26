@@ -1,11 +1,17 @@
 ---
-const { chapterHead } = Astro.props as {
+import Share from "./Share";
+
+const url = "https://psykip.vercel.app";
+
+const { chapterHead, translationCode, chapterNumber } = Astro.props as {
   chapterHead: string;
+  translationCode: string;
+  chapterNumber: string;
 };
 ---
 
 <div
-  class="c flex flex-col gap-4 sm:gap-0 sm:grid sm:grid-cols-[3fr,13fr] w-fit"
+  class="c group flex flex-col gap-4 sm:gap-0 sm:grid sm:grid-cols-[3fr,13fr] w-fit"
 >
   <div class="relative col-start-1 row-start-1">
     <div
@@ -14,6 +20,17 @@ const { chapterHead } = Astro.props as {
       <h2 id={chapterHead} class="text-2xl font-thin">
         <a href={`#${chapterHead}`}>{chapterHead}</a>
       </h2>
+      <ul
+        class="sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-active:opacity-100 transition-opacity"
+      >
+        <li>
+          <Share
+            client:load
+            url={`${url}/read/${translationCode}/${chapterNumber}`}
+          />
+        </li>
+        <li><button></button></li>
+      </ul>
     </div>
   </div>
   <div class="col-start-2 flex flex-col gap-4 mdContainer">
@@ -25,3 +42,8 @@ const { chapterHead } = Astro.props as {
     @apply first-of-type:first-letter:text-2xl first-of-type:first-letter:font-thin max-w-prose;
   }
 </style>
+<script>
+  function something() {
+    console.log("something");
+  }
+</script>
