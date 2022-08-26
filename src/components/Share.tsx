@@ -24,7 +24,7 @@ export default function Share({
   return (
     <div class="flex items-center gap-1">
       <button
-        class="p-2"
+        class="-ml-2 p-2"
         onClick={async () => {
           const url = `${appUrl}/read/${translationCode}/${chapterNumber}`;
 
