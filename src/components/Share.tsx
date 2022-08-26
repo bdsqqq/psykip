@@ -35,7 +35,7 @@ export default function Share({ url }: { url: string }) {
           }
         }}
       >
-        {!isSuccess() ? <ShareSvg /> : <CheckmarkSvg />}
+        {!(isSuccess() === "copy") ? <ShareSvg /> : <CheckmarkSvg />}
       </button>
       <span
         class={`transform-gpu transition-all pointer-events-none ${
