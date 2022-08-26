@@ -53,6 +53,7 @@ const MDs = await Promise.all(
             translationCode={translation}
             chapterNumber={(i + 1).toString()}
             chapterHead={MD.frontmatter.Chapter}
+            chapterTextContent={MD.rawContent()}
           >
             <MD.Content key={i} />
           </Chapter>

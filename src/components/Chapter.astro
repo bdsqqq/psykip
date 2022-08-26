@@ -1,12 +1,15 @@
 ---
 import Share from "./Share";
+import CopyChapterContent from "./CopyChapterContent";
 import type { TranslationCode } from "../data/codes";
 
-const { chapterHead, translationCode, chapterNumber } = Astro.props as {
-  chapterHead: string;
-  translationCode: TranslationCode;
-  chapterNumber: string;
-};
+const { chapterHead, translationCode, chapterNumber, chapterTextContent } =
+  Astro.props as {
+    chapterHead: string;
+    translationCode: TranslationCode;
+    chapterNumber: string;
+    chapterTextContent: string;
+  };
 ---
 
 <div
@@ -28,6 +31,9 @@ const { chapterHead, translationCode, chapterNumber } = Astro.props as {
             chapterNumber={chapterNumber}
             translationCode={translationCode}
           />
+        </li>
+        <li>
+          <CopyChapterContent client:load textContent={chapterTextContent} />
         </li>
       </ul>
     </div>
