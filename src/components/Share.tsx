@@ -24,7 +24,7 @@ export default function Share({
   return (
     <div class="flex items-center gap-1">
       <button
-        class="-ml-2 p-2"
+        class="-m-2 p-2"
         onClick={async () => {
           const url = `${appUrl}/read/${translationCode}/${chapterNumber}`;
 
@@ -33,7 +33,7 @@ export default function Share({
               // Browser supports share API
               await navigator.share({
                 title: "Psykip",
-                text: `The Enchiridion, chapter ${chapterNumber} -- translation by ${translatorNamesByCode[translationCode]}`,
+                text: `The Enchiridion, chapter ${chapterNumber} — translation by ${translatorNamesByCode[translationCode]}`,
                 url: url,
               });
               setIsSuccess("share");
