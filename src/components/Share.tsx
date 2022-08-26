@@ -22,8 +22,9 @@ export default function Share({
   });
 
   return (
-    <div class="flex items-center gap-1">
+    <div class="relative flex flex-col sm:flex-row items-center gap-1">
       <button
+        title="Share"
         class="-m-2 p-2"
         onClick={async () => {
           const url = `${appUrl}/read/${translationCode}/${chapterNumber}`;
@@ -50,10 +51,10 @@ export default function Share({
         {!(isSuccess() === "copy") ? <ShareSvg /> : <CheckmarkSvg />}
       </button>
       <span
-        class={`transform-gpu transition-all pointer-events-none ${
+        class={`absolute -m-2 top-4 sm:top-1 sm:left-6 transform-gpu transition-all pointer-events-none ${
           isSuccess() === "copy"
-            ? "-translate-x-0 opacity-100"
-            : "-translate-x-2 opacity-0"
+            ? "translate-y-0 sm:-translate-x-0 opacity-100"
+            : "-translate-y-2 sm:translate-y-0 sm:-translate-x-2 opacity-0"
         }`}
       >
         Copied!
