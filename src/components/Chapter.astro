@@ -20,7 +20,7 @@ const { chapterHead, translationCode, chapterNumber } = Astro.props as {
         <a href={`#${chapterHead}`}>{chapterHead}</a>
       </h2>
       <ul
-        class="sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 group-active:opacity-100 transition-opacity"
+        class="flex sm:flex-col items-center sm:items-start gap-4 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity"
       >
         <li>
           <Share
@@ -29,7 +29,6 @@ const { chapterHead, translationCode, chapterNumber } = Astro.props as {
             translationCode={translationCode}
           />
         </li>
-        <li><button></button></li>
       </ul>
     </div>
   </div>
@@ -39,11 +38,6 @@ const { chapterHead, translationCode, chapterNumber } = Astro.props as {
 </div>
 <style is:global>
   .mdContainer > p {
-    @apply first-of-type:first-letter:text-2xl first-of-type:first-letter:font-thin max-w-prose;
+    @apply first-of-type:first-letter:text-2xl max-w-prose;
   }
 </style>
-<script>
-  function something() {
-    console.log("something");
-  }
-</script>
