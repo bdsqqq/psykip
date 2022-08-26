@@ -1,11 +1,10 @@
 ---
 import Share from "./Share";
-
-const url = "https://psykip.vercel.app";
+import type { TranslationCode } from "../data/codes";
 
 const { chapterHead, translationCode, chapterNumber } = Astro.props as {
   chapterHead: string;
-  translationCode: string;
+  translationCode: TranslationCode;
   chapterNumber: string;
 };
 ---
@@ -26,7 +25,8 @@ const { chapterHead, translationCode, chapterNumber } = Astro.props as {
         <li>
           <Share
             client:load
-            url={`${url}/read/${translationCode}/${chapterNumber}`}
+            chapterNumber={chapterNumber}
+            translationCode={translationCode}
           />
         </li>
         <li><button></button></li>

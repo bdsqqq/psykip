@@ -1,6 +1,16 @@
 import { createSignal, createEffect } from "solid-js";
+import { translatorNamesByCode } from "../data/codes";
+import type { TranslationCode } from "../data/codes";
 
-export default function Share({ url }: { url: string }) {
+const appUrl = "https://psykip.vercel.app";
+
+export default function Share({
+  translationCode,
+  chapterNumber,
+}: {
+  translationCode: TranslationCode;
+  chapterNumber: string;
+}) {
   const [isSuccess, setIsSuccess] = createSignal("");
   createEffect(() => {
     //TODO: clear timeout when this runs so the checkmark timing keeps getting reset when people click a lot
@@ -16,12 +26,14 @@ export default function Share({ url }: { url: string }) {
       <button
         class="p-2"
         onClick={async () => {
+          const url = `${appUrl}/read/${translationCode}/${chapterNumber}`;
+
           try {
             if (navigator.share !== undefined) {
               // Browser supports share API
               await navigator.share({
-                title: "Psykip - chapter i",
-                text: "Something something",
+                title: "Psykip",
+                text: `The Enchiridion, chapter ${chapterNumber} -- translation by ${translatorNamesByCode[translationCode]}`,
                 url: url,
               });
               setIsSuccess("share");
