@@ -3,11 +3,12 @@ import Base from "../layouts/base.astro";
 import epictetus from "/img/dither_epictetus_no_bg.png";
 
 import { Icon } from "astro-icon";
+import Read from "../components/Read.astro";
 ---
 
 <Base title="home">
-  <div
-    class="grid lg:grid-cols-[repeat(16,1fr)] lg:grid-rows-4 gap-4 px-12 justify-center min-h-screen"
+  <section
+    class="grid lg:grid-cols-[repeat(16,1fr)] lg:grid-rows-4 gap-4 px-12 justify-center min-h-[80vh]"
   >
     <div class="col-start-1 col-end-8 row-start-2">
       <h1 class="inline uppercase text-6xl font-bold">the Manual</h1>
@@ -23,8 +24,7 @@ import { Icon } from "astro-icon";
       </p>
       <a
         class="flex gap-1 items-center p-2 -ml-2 w-min underline underline-offset-2 outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100 ring-offset-2 group"
-        href="/read"
-        rel="prefetch"
+        href="#read"
         >Read <Icon
           class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-hover:translate-x-1"
           name="radix-icons:arrow-right"
@@ -43,5 +43,6 @@ import { Icon } from "astro-icon";
         />
       </figure>
     </div>
-  </div>
+  </section>
+  <Read />
 </Base>

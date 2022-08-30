@@ -1,0 +1,40 @@
+---
+import type { Frontmatter } from "../pages/read/[translation]/[chapter].astro";
+
+const MDs = await Astro.glob<Frontmatter>("../data/**/index.md");
+const frontmatters = MDs.map((MD) => MD.frontmatter);
+---
+
+<section
+  id="read"
+  class="flex flex-col lg:grid lg:grid-cols-[1fr,3fr] gap-16 min-h-screen px-12 py-16"
+>
+  <h1 class="text-2xl">
+    We compiled translations from diferent authors at diferent points of history
+    alongisde the original Enchiridion to make sure you can read your favorite
+    version of it.
+  </h1>
+  <ul
+    class="flex flex-col transition-colors hover:text-zinc-400 pointer-events-none divide-y divide-zinc-300 border-y border-zinc-300 h-min"
+  >
+    {
+      frontmatters
+        .sort((a, b) => (a.Date > b.Date ? 1 : -1))
+        .map((frontmatter) => (
+          <li>
+            <a
+              class="py-6 block transition-colors hover:text-zinc-900  pointer-events-auto"
+              href={`read/${frontmatter.Code}`}
+            >
+              <div class="flex gap-4 justify-between">
+                {frontmatter.Translator}
+                <div class="inline-block w-[4ch] tabular-nums text-right">
+                  {frontmatter.Date}
+                </div>
+              </div>
+            </a>
+          </li>
+        ))
+    }
+  </ul>
+</section>
