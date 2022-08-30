@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import prefetch from "@astrojs/prefetch";
+import { astroImageTools } from "astro-imagetools";
 
 import solid from "@astrojs/solid-js";
 
@@ -11,5 +12,5 @@ export default defineConfig({
       external: ["svgo"],
     },
   },
-  integrations: [tailwind(), prefetch(), solid()],
+  integrations: [tailwind(), prefetch(), solid(), astroImageTools],
 });
