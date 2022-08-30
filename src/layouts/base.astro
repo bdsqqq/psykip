@@ -17,14 +17,10 @@ const { title, description } = Astro.props as Props;
       {title}
     </title>
 
-    <meta
-      property="og:title"
-      content="The manual, a compilation of the Enchiridion translations"
-    />
-    <meta
-      property="og:description"
-      content="We compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it."
-    />
+    <meta name="description" content={description} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
     <meta property="og:image" content="twitter_og.jpg" />
     <meta name="twitter:image" content="/twitter_og.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
