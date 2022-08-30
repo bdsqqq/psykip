@@ -1,7 +1,14 @@
 ---
 import type { MarkdownInstance } from "astro";
 import Base from "../../../layouts/base.astro";
+import Chapter from "../../../components/Chapter.astro";
 import codes from "../../../data/codes";
+import type {
+  TranslationCode,
+  Chapter as ChapterType,
+} from "../../../data/codes";
+import SourceFooter from "../../../components/SourceFooter.astro";
+import { Icon } from "astro-icon";
 
 export function getStaticPaths() {
   return codes
@@ -25,7 +32,10 @@ export function getStaticPaths() {
     });
 }
 
-const { translation, chapter } = Astro.params;
+const { translation, chapter } = Astro.params as unknown as {
+  translation: TranslationCode;
+  chapter: ChapterType;
+};
 
 export interface Frontmatter {
   Author: string;
@@ -46,6 +56,33 @@ const MD = (await import(
 ---
 
 <Base title={MD.frontmatter.Author}>
-  <a href={MD.frontmatter.Source.url}>{MD.frontmatter.Source.label}</a>
-  <MD.Content />
+  <div class="flex flex-col px-12 py-16 justify-between min-h-screen gap-40">
+    <div class="flex flex-col gap-20 mx-auto">
+      <Chapter
+        translationCode={translation}
+        chapterNumber={chapter.toString()}
+        chapterHead={MD.frontmatter.Chapter}
+        chapterTextContent={MD.rawContent()}
+      >
+        <MD.Content key={chapter} />
+      </Chapter>
+
+      <div>
+        <a
+          class="flex gap-1 items-center p-2 -ml-2 w-max underline underline-offset-2 outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100 ring-offset-2 group"
+          rel="prefetch"
+          href={`/read/${MD.frontmatter.Code}#${MD.frontmatter.Chapter}`}
+          >Continue reading<Icon
+            class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-hover:translate-x-1"
+            name="radix-icons:arrow-right"
+          />
+        </a>
+      </div>
+    </div>
+
+    <SourceFooter
+      url={MD.frontmatter.Source.url}
+      label={MD.frontmatter.Source.label}
+    />
+  </div>
 </Base>
