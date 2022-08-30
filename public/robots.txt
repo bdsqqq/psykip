@@ -1,0 +1,7 @@
+User-agent: Googlebot-Image
+Disallow: /*.png$
+
+User-agent: *
+Allow: /
+
+Sitemap: https://psykip.vercel.app/sitemap.xml
