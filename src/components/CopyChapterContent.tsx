@@ -32,7 +32,7 @@ export default function CopyChapterContent({
         {!isSuccess() ? <ClipboardCopy /> : <CheckmarkSvg />}
       </button>
       <span
-        class={`absolute -m-2 top-4 sm:top-1 sm:left-6 transform-gpu transition-all pointer-events-none ${
+        class={`absolute -m-2 top-4 sm:top-1 sm:left-6 transform-gpu transition-all pointer-events-none select-none ${
           isSuccess()
             ? "translate-y-0 sm:-translate-x-0 opacity-100"
             : "-translate-y-2 sm:translate-y-0 sm:-translate-x-2 opacity-0"
