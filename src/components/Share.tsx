@@ -33,7 +33,8 @@ export default function Share({
             if (navigator.share !== undefined) {
               // Browser supports share API
               await navigator.share({
-                title: "Psykip",
+                title:
+                  "The manual, a compilation of the Enchiridion translations",
                 text: `The Enchiridion, chapter ${chapterNumber} — translation by ${translatorNamesByCode[translationCode]}`,
                 url: url,
               });

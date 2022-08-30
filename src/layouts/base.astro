@@ -2,9 +2,10 @@
 import "@fontsource/roboto-slab/variable.css";
 export interface Props {
   title: string;
+  description: string;
 }
 
-const { title } = Astro.props as Props;
+const { title, description } = Astro.props as Props;
 ---
 
 <html lang="en" class="scroll-smooth">
@@ -12,7 +13,21 @@ const { title } = Astro.props as Props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+    <title>
+      {title}
+    </title>
+
+    <meta
+      property="og:title"
+      content="The manual, a compilation of the Enchiridion translations"
+    />
+    <meta
+      property="og:description"
+      content="We compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it."
+    />
+    <meta property="og:image" content="twitter_og.jpg" />
+    <meta name="twitter:image" content="/twitter_og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
