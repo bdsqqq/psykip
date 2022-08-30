@@ -3,8 +3,8 @@ import type { MarkdownInstance } from "astro";
 import type { Frontmatter as ChapterFrontmatter } from "./[translation]/[chapter].astro";
 import Base from "../../layouts/base.astro";
 import codes from "../../data/codes";
-import { Icon } from "astro-icon";
 import Chapter from "../../components/Chapter.astro";
+import SourceFooter from "../../components/SourceFooter.astro";
 
 export function getStaticPaths() {
   return codes.map((code) => ({
@@ -61,15 +61,7 @@ const MDs = await Promise.all(
       ))
     }
 
-    <footer>
-      The source of this translation is <a
-        class="underline underline-offset-2 outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100"
-        href={frontmatter.Source.url}
-        >{frontmatter.Source.label}<Icon
-          class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px]"
-          name="radix-icons:arrow-top-right"
-        />
-      </a>
-    </footer>
+    <SourceFooter url={frontmatter.Source.url} label={frontmatter.Source.label}
+    />
   </div>
 </Base>
