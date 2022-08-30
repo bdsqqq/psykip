@@ -12,58 +12,12 @@ export const translatorNamesByCode = {
 } as const;
 export type TranslationCode = keyof typeof translatorNamesByCode;
 
-// yeah, sorry, tried doing this the complicated way with tail recursion but copy pasting this to here is way easier AND this is a 2000 year old book, I'm almost sure the author will not come up with another edition...
+// This is weird but I like it a lot, thanks @lukemorales https://twitter.com/lukemorales/status/1564424193877368832
+type OneToNine = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+type ZeroToNine = 0 | OneToNine;
+type CompleteTensDigit = 1 | 2 | 3 | 4;
+
 export type Chapter =
-  | "1"
-  | "2"
-  | "3"
-  | "4"
-  | "5"
-  | "6"
-  | "7"
-  | "8"
-  | "9"
-  | "10"
-  | "11"
-  | "12"
-  | "13"
-  | "14"
-  | "15"
-  | "16"
-  | "17"
-  | "18"
-  | "19"
-  | "20"
-  | "21"
-  | "22"
-  | "23"
-  | "24"
-  | "25"
-  | "26"
-  | "27"
-  | "28"
-  | "29"
-  | "30"
-  | "31"
-  | "32"
-  | "33"
-  | "34"
-  | "35"
-  | "36"
-  | "37"
-  | "38"
-  | "39"
-  | "40"
-  | "41"
-  | "42"
-  | "43"
-  | "44"
-  | "45"
-  | "46"
-  | "47"
-  | "48"
-  | "49"
-  | "50"
-  | "51"
-  | "52"
-  | "53";
+  | `${OneToNine}`
+  | `${CompleteTensDigit}${ZeroToNine}`
+  | `${5}${Extract<ZeroToNine, 1 | 2 | 3>}`;
