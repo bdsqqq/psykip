@@ -13,7 +13,7 @@ const { chapterHead, translationCode, chapterNumber, chapterTextContent } =
 ---
 
 <div
-  class="c group flex flex-col gap-4 sm:gap-0 sm:grid sm:grid-cols-[3fr,13fr] w-fit"
+  class="c group flex flex-col gap-4 sm:gap-0 sm:grid sm:grid-cols-[3fr,13fr] w-full"
 >
   <div class="relative col-start-1 row-start-1">
     <div
@@ -38,12 +38,13 @@ const { chapterHead, translationCode, chapterNumber, chapterTextContent } =
       </ul>
     </div>
   </div>
-  <div class="col-start-2 flex flex-col gap-4 mdContainer">
+  <div class="col-start-2 flex flex-col gap-4 w-full mdContainer">
     <slot />
   </div>
 </div>
 <style is:global>
-  .mdContainer > p {
-    @apply first-of-type:first-letter:text-2xl first-of-type:first-letter:font-light max-w-prose;
+  .mdContainer > p,
+  ul {
+    @apply first:first-letter:text-2xl first:first-letter:font-light max-w-prose;
   }
 </style>
