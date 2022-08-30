@@ -4,13 +4,15 @@ import { Icon } from "astro-icon";
 const { url, label } = Astro.props as { url: string; label: string };
 ---
 
-<footer>
-  The source of this translation is <a
-    class="underline underline-offset-2 outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100"
-    href={url}
-    >{label}<Icon
-      class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px]"
-      name="radix-icons:arrow-top-right"
-    />
-  </a>
+<footer class="flex justify-end">
+  <div class="w-max">
+    The source of this translation is <a
+      class="underline underline-offset-2 outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100"
+      href={url}
+      >{label}<Icon
+        class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px]"
+        name="radix-icons:arrow-top-right"
+      />
+    </a>
+  </div>
 </footer>
