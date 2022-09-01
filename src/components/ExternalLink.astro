@@ -1,0 +1,19 @@
+---
+import { Icon } from "astro-icon";
+
+export interface Props {
+  url: string;
+}
+
+const { url } = Astro.props;
+---
+
+<a
+  class="underline underline-offset-2 outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100"
+  href={url}
+  target="_blank"
+  ><slot /><Icon
+    class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px]"
+    name="radix-icons:arrow-top-right"
+  />
+</a>

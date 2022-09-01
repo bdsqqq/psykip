@@ -1,5 +1,5 @@
 ---
-import { Icon } from "astro-icon";
+import ExternalLink from "./ExternalLink.astro";
 
 export interface Props {
   url: string;
@@ -11,13 +11,8 @@ const { url, label } = Astro.props;
 
 <footer class="flex justify-end">
   <div class="w-max">
-    The source of this translation is <a
-      class="underline underline-offset-2 outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100"
-      href={url}
-      >{label}<Icon
-        class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px]"
-        name="radix-icons:arrow-top-right"
-      />
-    </a>
+    The source of this translation is <ExternalLink url={url}
+      >{label}
+    </ExternalLink>
   </div>
 </footer>
