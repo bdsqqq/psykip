@@ -1,7 +1,12 @@
 ---
 import { Icon } from "astro-icon";
 
-const { url, label } = Astro.props as { url: string; label: string };
+export interface Props {
+  url: string;
+  label: string;
+}
+
+const { url, label } = Astro.props;
 ---
 
 <footer class="flex justify-end">
