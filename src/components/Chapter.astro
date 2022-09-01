@@ -3,13 +3,15 @@ import Share from "./Share";
 import CopyChapterContent from "./CopyChapterContent";
 import type { TranslationCode } from "../data/codes";
 
+export interface Props {
+  chapterHead: string;
+  translationCode: TranslationCode;
+  chapterNumber: string;
+  chapterTextContent: string;
+}
+
 const { chapterHead, translationCode, chapterNumber, chapterTextContent } =
-  Astro.props as {
-    chapterHead: string;
-    translationCode: TranslationCode;
-    chapterNumber: string;
-    chapterTextContent: string;
-  };
+  Astro.props;
 ---
 
 <div
