@@ -1,6 +1,7 @@
 ---
 import type { MarkdownInstance } from "astro";
 import type { Frontmatter as ChapterFrontmatter } from "./[translation]/[chapter].astro";
+import type { TranslationCode } from "../../data/codes"
 import Base from "../../layouts/base.astro";
 import codes from "../../data/codes";
 import Chapter from "../../components/Chapter.astro";
@@ -14,7 +15,9 @@ export function getStaticPaths() {
   }));
 }
 
-const { translation } = Astro.params;
+const { translation } = Astro.params as {
+  translation: TranslationCode
+};
 
 interface Frontmatter {
   Author: string;
@@ -25,7 +28,7 @@ interface Frontmatter {
     label: string;
     url: string;
   };
-  Code: string;
+  Code: TranslationCode;
 }
 
 const { frontmatter } = (await import(
