@@ -9,7 +9,7 @@ const { url } = Astro.props;
 ---
 
 <a
-  class="inline-flex items-center outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100"
+  class="inline-flex items-center group outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100"
   href={url}
   target="_blank"
 >
@@ -17,7 +17,7 @@ const { url } = Astro.props;
     <slot />
   </span>
   <Icon
-    class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px]"
+    class="inline h-[15px] w-[15px] group-hover:translate-x-[2px] group-hover:-translate-y-[1px] group-focus-visible:translate-x-[2px] group-focus-visible:-translate-y-[1px] transition-transform transform translate-y-[1px]"
     name="radix-icons:arrow-top-right"
   />
 </a>
