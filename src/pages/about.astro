@@ -1,0 +1,87 @@
+---
+import { Icon } from "astro-icon";
+import Base from "../layouts/base.astro";
+import ExternalLink from "../components/ExternalLink.astro";
+---
+
+<Base
+  title="About — The manual, a compilation of the Enchiridion translations"
+  description="Why and how we compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it."
+>
+  <main
+    class="flex flex-col md:grid md:grid-cols-2 md:grid-rows-2 gap-16 h-full px-12 py-16 max-w-5xl mx-auto"
+  >
+    <div>
+      <h1 class="uppercase text-6xl font-bold">About</h1>
+      <p>
+        This is an <ExternalLink url="https://opensource.org/osd">
+          {"Open Source"}
+        </ExternalLink> project, the source code can be found on <ExternalLink
+          url="https://github.com/bdsqqq/psykip"
+          >{"github"}
+        </ExternalLink>
+      </p>
+    </div>
+    <div class="flex flex-col gap-10 md:row-span-2">
+      <div>
+        <h2 class="text-xl font-bold">Why?</h2>
+        <div class="flex flex-col gap-4">
+          <p>
+            The Enchiridion as an amazing book, an easy read filled with
+            valuable insights. Unfortunatelly, even with multiple public domain
+            translations, reading it can often be a bad experience.
+          </p>
+          <p>
+            Between old and sometimes confusing terms, hard to find and even
+            harder to download files and outdated websites; The barriers between
+            an interested reader and this content were too big. So, why not make
+            a website that solves these problems?
+          </p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold">How?</h2>
+        <ol class="flex flex-col gap-4 list-decimal">
+          <li>
+            We focused our efforts into good design. While the content is the
+            reason we built this site, it's presentation is what solves the
+            problems listed above. Both the User experience and interface were
+            created to make this website the best way to read the Enchiridion.
+          </li>
+          <li>
+            Even though some translations aren't the best for everyone, they
+            might be the favorites of some folks, so instead of pushing for one
+            or another, we made it easy to read the one that works for YOU.
+          </li>
+          <li>
+            We understand that books are hard to share, with multiple file types
+            that work for different devices with different applications a
+            project like this can grow out of control fast. That's why we took a
+            step back and choose to serve the content from each translation in a
+            way that's easy to read and to share; nothing more, nothing less.
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="place-self-end w-full">
+      <p>
+        This site was designed and developed by <ExternalLink
+          url="https://igorbedesqui.com"
+        >
+          Igor Bedesqui
+        </ExternalLink>
+      </p>
+      <p>
+        <a
+          class="flex gap-1 items-center p-2 -ml-2 w-max underline underline-offset-2 outline-none focus-visible:ring ring-zinc-900 ring-offset-zinc-100 ring-offset-2 group"
+          href="/about/translations"
+          >See translations sources <Icon
+            class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-hover:translate-x-1"
+            name="radix-icons:arrow-right"
+          />
+        </a>
+      </p>
+    </div>
+  </main>
+</Base>
