@@ -7,11 +7,10 @@ export interface Props {
   chapterHead: string;
   translationCode: TranslationCode;
   chapterNumber: string;
-  chapterTextContent: string;
+  chapterId: string;
 }
 
-const { chapterHead, translationCode, chapterNumber, chapterTextContent } =
-  Astro.props;
+const { chapterHead, translationCode, chapterNumber, chapterId } = Astro.props;
 ---
 
 <div
@@ -35,12 +34,15 @@ const { chapterHead, translationCode, chapterNumber, chapterTextContent } =
           />
         </li>
         <li>
-          <CopyChapterContent client:load textContent={chapterTextContent} />
+          <CopyChapterContent client:load contentId={chapterId} />
         </li>
       </ul>
     </div>
   </div>
-  <div class="col-start-2 flex flex-col gap-4 w-full mdContainer">
+  <div
+    id={chapterId}
+    class="col-start-2 flex flex-col gap-4 w-full mdContainer"
+  >
     <slot />
   </div>
 </div>

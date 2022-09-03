@@ -1,9 +1,9 @@
 import { createSignal, createEffect } from "solid-js";
 
 export default function CopyChapterContent({
-  textContent,
+  contentId,
 }: {
-  textContent: string;
+  contentId: string;
 }) {
   const [isSuccess, setIsSuccess] = createSignal(false);
   createEffect(() => {
@@ -22,7 +22,11 @@ export default function CopyChapterContent({
         class="-m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors"
         onClick={async () => {
           try {
-            await navigator.clipboard.writeText(textContent);
+            const textContent = document.getElementById(contentId)?.innerText;
+
+            console.log(textContent);
+
+            await navigator.clipboard.writeText(textContent || "");
             setIsSuccess(true);
           } catch (err) {
             console.error(err);
