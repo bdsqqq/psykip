@@ -51,7 +51,7 @@ const MDs = await Promise.all(
   description={`Read ${frontmatter.Translator}'s Translation of the Enchiridion. We compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it.`}
 >
   <div class="flex flex-col gap-40 px-12 py-16">
-    <div id="chapterContainer" class="flex flex-col gap-24 mx-auto">
+    <div class="flex flex-col gap-24 mx-auto">
       {
         MDs.map((MD, i) => (
           <div data-chapter={i + 1}>
