@@ -75,15 +75,16 @@ const MDs = await Promise.all(
 <script client:load>
   const translation = window.location.href.split("/").slice(-1)[0].split("#")[0];
   
-  let readUpTo = localStorage.getItem(translation)
+  let readUpTo = localStorage.getItem(translation);
 
   const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
+    entries.forEach((entry) => {
       const intersecting = entry.isIntersecting
       if(intersecting){
         const chapter = entry.target.attributes["data-chapter"].value;
-        if(parseInt(chapter) > parseInt(readUpTo)){
+        if(!readUpTo | parseInt(chapter) > parseInt(readUpTo)){
           localStorage.setItem(translation, chapter)
+          readUpTo = localStorage.getItem(translation)
         }
       } 
     })
