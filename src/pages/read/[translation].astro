@@ -77,17 +77,25 @@ const MDs = await Promise.all(
     />
   </div>  
 </Base>
-<script client:load>
+<script>
   const translation = window.location.href.split("/").slice(-1)[0].split("#")[0];
   
   let readUpTo = localStorage.getItem(translation);
 
   if (readUpTo){
-    const continueCTA = document.getElementById("continueCTA");
+    const continueCTA = document.querySelector<HTMLAnchorElement>("#continueCTA");
+    if(!continueCTA){
+      console.log("couldn't find #continueCTA")
+      return
+    }
     continueCTA.href = `#${readUpTo}`
     continueCTA.innerText = `Continue from chapter ${readUpTo}`
 
-    const continueToolbar = document.getElementById("continueToolbar");
+    const continueToolbar = document.querySelector("#continueToolbar");
+    if(!continueToolbar){
+      console.log("couldn't find #continueToolbar")
+      return
+    }
     continueToolbar.classList.remove("hidden");
     continueToolbar.classList.add("flex")
   }
@@ -96,8 +104,8 @@ const MDs = await Promise.all(
     entries.forEach((entry) => {
       const intersecting = entry.isIntersecting
       if(intersecting){
-        const chapter = entry.target.attributes["data-chapter"].value;
-        if(!readUpTo | parseInt(chapter) > parseInt(readUpTo)){
+        const chapter = entry.target.attributes["data-chapter"].value as string;
+        if(!readUpTo || parseInt(chapter) > parseInt(readUpTo)){
           localStorage.setItem(translation, chapter)
           readUpTo = localStorage.getItem(translation)
         }
