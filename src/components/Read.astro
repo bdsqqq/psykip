@@ -15,7 +15,7 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
     version of it.
   </h1>
   <ul
-    class="flex flex-col transition-colors hover:text-zinc-400 pointer-events-none divide-y divide-zinc-300 border-y border-zinc-300 h-min"
+    class="flex flex-col transition-colors focus-within:text-zinc-400 hover:text-zinc-400 pointer-events-none divide-y divide-zinc-300 border-y border-zinc-300 h-min"
   >
     {
       frontmatters
@@ -23,7 +23,7 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
         .map((frontmatter) => (
           <li>
             <a
-              class="py-6 block transition-colors hover:text-zinc-900  pointer-events-auto"
+              class="py-6 block transition-colors focus:text-zinc-900 hover:text-zinc-900  pointer-events-auto outline-none ring-zinc-500 focus-visible:ring-2 focus-within:z-10 relative"
               href={`read/${frontmatter.Code}`}
             >
               <div class="flex gap-4 justify-between">
