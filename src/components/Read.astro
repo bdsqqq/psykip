@@ -1,6 +1,8 @@
 ---
 import type { Frontmatter } from "../pages/read/[translation]/[chapter].astro";
 
+import { Icon } from "astro-icon";
+
 const MDs = await Astro.glob<Frontmatter>("../data/**/index.md");
 const frontmatters = MDs.map((MD) => MD.frontmatter);
 ---
@@ -24,10 +26,25 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
           <li>
             <a
               class="py-6 block transition-colors focus:text-zinc-900 hover:text-zinc-900  pointer-events-auto outline-none ring-zinc-500 focus-visible:ring-2  focus-within:z-10 relative"
-              href={`read/${frontmatter.Code}`}
+              href={`/read/${frontmatter.Code}`}
             >
               <div class="flex gap-4 justify-between">
-                {frontmatter.Translator}
+                <div class="inline-flex gap-4" id={`read-${frontmatter.Code}`}>
+                  <span>{frontmatter.Translator}</span>
+                  <span
+                    data-read-cta={frontmatter.Code}
+                    class="hidden items-center gap-4 text-zinc-500"
+                  >
+                    —
+                    <div>
+                      <span id={`${frontmatter.Code}-slot`} />
+                      <Icon
+                        class="inline h-[15px] w-[15px]"
+                        name="radix-icons:bookmark"
+                      />
+                    </div>
+                  </span>
+                </div>
                 <div class="inline-block w-[4ch] tabular-nums text-right">
                   {frontmatter.Date}
                 </div>
@@ -38,3 +55,19 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
     }
   </ul>
 </div>
+<script client:load>
+  const readCTAs = document.querySelectorAll("span[data-read-cta]");
+
+  readCTAs.forEach((CTA) => {
+    translation = CTA.attributes["data-read-cta"].value;
+    const readUpTo = localStorage.getItem(translation);
+
+    if (readUpTo) {
+      const slot = document.getElementById(`${translation}-slot`);
+      slot.innerText = readUpTo;
+      CTA.title = `Read up to chapter ${readUpTo}`;
+      CTA.classList.remove("hidden");
+      CTA.classList.add("flex");
+    }
+  });
+</script>
