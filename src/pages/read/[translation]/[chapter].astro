@@ -65,7 +65,7 @@ const MD = (await import(
         translationCode={translation}
         chapterNumber={chapter.toString()}
         chapterHead={MD.frontmatter.Chapter}
-        chapterTextContent={MD.rawContent()}
+        chapterId={`${translation}-${chapter}`}
       >
         <MD.Content key={chapter} />
       </Chapter>
