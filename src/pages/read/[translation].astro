@@ -84,34 +84,36 @@ const MDs = await Promise.all(
 
   if (readUpTo){
     const continueCTA = document.querySelector<HTMLAnchorElement>("#continueCTA");
-    if(!continueCTA){
+    if(continueCTA){
+      continueCTA.href = `#${readUpTo}`
+      continueCTA.innerText = `Continue from chapter ${readUpTo}`
+    } else {
       console.log("couldn't find #continueCTA")
-      return
     }
-    continueCTA.href = `#${readUpTo}`
-    continueCTA.innerText = `Continue from chapter ${readUpTo}`
 
     const continueToolbar = document.querySelector("#continueToolbar");
-    if(!continueToolbar){
+    if(continueToolbar){
+      continueToolbar.classList.remove("hidden");
+      continueToolbar.classList.add("flex")
+    } else {
       console.log("couldn't find #continueToolbar")
-      return
     }
-    continueToolbar.classList.remove("hidden");
-    continueToolbar.classList.add("flex")
   }
 
   const observer = new IntersectionObserver(entries => {
     entries.forEach((entry) => {
       const intersecting = entry.isIntersecting
       if(intersecting){
-        const chapter = entry.target.attributes["data-chapter"].value as string;
-        if(!readUpTo || parseInt(chapter) > parseInt(readUpTo)){
-          localStorage.setItem(translation, chapter)
-          readUpTo = localStorage.getItem(translation)
+        const chapter = entry.target.attributes.getNamedItem("data-chapter")?.value
+        if(!!chapter){
+          if(!readUpTo || parseInt(chapter) > parseInt(readUpTo)){
+            localStorage.setItem(translation, chapter)
+            readUpTo = localStorage.getItem(translation)
+          }
         }
       } 
     })
-  }, {threshold: 1})
+  }, {threshold: 0, rootMargin: '0px 0px -100%'})
   
   const Chapters = document.querySelectorAll("div[data-chapter]")
   Chapters.forEach(chapter => {
