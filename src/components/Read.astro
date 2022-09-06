@@ -16,58 +16,113 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
     alongisde the original Enchiridion to make sure you can read your favorite
     version of it.
   </h1>
-  <ul
-    class="flex flex-col transition-colors focus-within:text-zinc-400 hover:text-zinc-400 pointer-events-none divide-y divide-zinc-300 border-y border-zinc-300 h-min"
-  >
-    {
-      frontmatters
-        .sort((a, b) => (a.Date > b.Date ? 1 : -1))
-        .map((frontmatter) => (
-          <li>
-            <a
-              class="py-6 block transition-colors focus:text-zinc-900 hover:text-zinc-900  pointer-events-auto outline-none ring-zinc-500 focus-visible:ring-2  focus-within:z-10 relative"
-              href={`/read/${frontmatter.Code}`}
-            >
-              <div class="flex gap-4 justify-between">
-                <div class="inline-flex gap-4" id={`read-${frontmatter.Code}`}>
-                  <span>{frontmatter.Translator}</span>
-                  <span
-                    data-read-cta={frontmatter.Code}
-                    class="hidden items-center gap-4 text-zinc-500"
+  <div class="relative flex flex-col gap-2">
+    <div class="absolute -top-8 right-0">
+      <button
+        class="hidden items-center w-max p-2 -m-2 transition-all opacity-100 text-zinc-600 hover:text-zinc-900 duration-200 underline-offset-2 underline"
+        id="eraseProgressCTA"
+        onclick="eraseProgress()"
+        >Erase reading progress
+      </button>
+    </div>
+    <ul
+      class="flex flex-col transition-colors focus-within:text-zinc-400 hover:text-zinc-400 pointer-events-none divide-y divide-zinc-300 border-y border-zinc-300 h-min"
+    >
+      {
+        frontmatters
+          .sort((a, b) => (a.Date > b.Date ? 1 : -1))
+          .map((frontmatter) => (
+            <li>
+              <a
+                class="py-6 block transition-colors focus:text-zinc-900 hover:text-zinc-900 pointer-events-auto outline-none ring-zinc-500 focus-visible:ring-2 focus-within:z-10 relative"
+                href={`/read/${frontmatter.Code}`}
+              >
+                <div class="flex gap-4 justify-between">
+                  <div
+                    class="inline-flex gap-4"
+                    id={`read-${frontmatter.Code}`}
                   >
-                    —
-                    <div>
-                      <span id={`${frontmatter.Code}-slot`} />
-                      <Icon
-                        class="inline h-[15px] w-[15px]"
-                        name="radix-icons:bookmark"
-                      />
-                    </div>
-                  </span>
+                    <span>{frontmatter.Translator}</span>
+                    <span
+                      data-read-cta={frontmatter.Code}
+                      class="hidden opacity-0 transition-all items-center gap-4 text-zinc-500"
+                    >
+                      —
+                      <div>
+                        <span id={`${frontmatter.Code}-slot`} />
+                        <Icon
+                          class="inline h-[15px] w-[15px]"
+                          name="radix-icons:reader"
+                        />
+                      </div>
+                    </span>
+                  </div>
+                  <div class="inline-block w-[4ch] tabular-nums text-right">
+                    {frontmatter.Date}
+                  </div>
                 </div>
-                <div class="inline-block w-[4ch] tabular-nums text-right">
-                  {frontmatter.Date}
-                </div>
-              </div>
-            </a>
-          </li>
-        ))
-    }
-  </ul>
+              </a>
+            </li>
+          ))
+      }
+    </ul>
+  </div>
+  <script client:load>
+    const readCTAs = document.querySelectorAll("span[data-read-cta]");
+    const eraseProgressCTA = document.querySelector("#eraseProgressCTA");
+    let someWasRead = false;
+
+    readCTAs.forEach((CTA) => {
+      const translation = CTA.attributes["data-read-cta"].value;
+      const readUpTo = localStorage.getItem(translation);
+
+      if (readUpTo) {
+        const slot = document.getElementById(`${translation}-slot`);
+        slot.innerText = readUpTo;
+        CTA.title = `Read up to chapter ${readUpTo}`;
+        CTA.classList.remove("hidden");
+        CTA.classList.add("flex");
+        CTA.classList.remove("opacity-0");
+        CTA.classList.add("opacity-100");
+
+        if (!someWasRead) {
+          console.log("some wasn't read");
+          eraseProgressCTA.classList.remove("hidden");
+          eraseProgressCTA.classList.add("flex");
+        }
+      }
+    });
+
+    const eraseProgress = () => {
+      readCTAs.forEach((CTA) => {
+        const translation = CTA.attributes["data-read-cta"].value;
+        const readUpTo = localStorage.getItem(translation);
+
+        if (readUpTo) {
+          localStorage.removeItem(translation);
+
+          const slot = document.getElementById(`${translation}-slot`);
+          slot.innerText = readUpTo;
+          CTA.title = `Read up to chapter ${readUpTo}`;
+          CTA.classList.remove("opacity-100");
+          CTA.classList.add("opacity-0");
+          CTA.classList.add("translate-x-2");
+
+          eraseProgressCTA.textContent = "Done!";
+          eraseProgressCTA.classList.add("pointer-events-none");
+          eraseProgressCTA.classList.remove("underline");
+          setTimeout(() => {
+            eraseProgressCTA.classList.add("opacity-0");
+            eraseProgressCTA.classList.add("translate-x-4");
+          }, 1000);
+
+          setTimeout(() => {
+            // After progress indicatos fade out
+            CTA.classList.remove("flex");
+            CTA.classList.add("hidden");
+          }, 150);
+        }
+      });
+    };
+  </script>
 </div>
-<script client:load>
-  const readCTAs = document.querySelectorAll("span[data-read-cta]");
-
-  readCTAs.forEach((CTA) => {
-    translation = CTA.attributes["data-read-cta"].value;
-    const readUpTo = localStorage.getItem(translation);
-
-    if (readUpTo) {
-      const slot = document.getElementById(`${translation}-slot`);
-      slot.innerText = readUpTo;
-      CTA.title = `Read up to chapter ${readUpTo}`;
-      CTA.classList.remove("hidden");
-      CTA.classList.add("flex");
-    }
-  });
-</script>
