@@ -2,6 +2,7 @@
 import type { MarkdownInstance } from "astro";
 import type { Frontmatter as ChapterFrontmatter } from "./[translation]/[chapter].astro";
 import type { TranslationCode } from "../../data/codes"
+import { Icon } from "astro-icon";
 import Base from "../../layouts/base.astro";
 import codes from "../../data/codes";
 import Chapter from "../../components/Chapter.astro";
@@ -50,10 +51,15 @@ const MDs = await Promise.all(
   title={`${frontmatter.Translator}'s translation — The manual, a compilation of the Enchiridion translations`}
   description={`Read ${frontmatter.Translator}'s Translation of the Enchiridion. We compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it.`}
 >
-  <div id="continueToolbar" class="hidden absolute w-full gap-4 justify-between md:justify-start lg:flex-col lg:gap-2 px-8 md:px-12 py-6 mx-auto">
-    <a id="continueCTA"/>
-    <!--Hidden for now while functionality isn't implemented -->
-    <span class="hidden">Clear progress</span>
+  <div id="continueToolbar" class="hidden absolute transition-opacity opacity-0 w-full gap-4 justify-between md:justify-start lg:flex-col lg:gap-2 px-8 md:px-12 py-6 mx-auto">
+    <a class="w-max text-zinc-600 hover:text-zinc-900 duration-200 underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2 underline group" id="continueCTA">
+      <span id="continueCTALabel"/>
+      <Icon
+        class="inline h-[15px] w-[15px] transition-transform transform -translate-y-[1px] group-focus-visible:translate-y-[2px] group-hover:translate-y-[2px]"
+        name="radix-icons:arrow-down"
+      />
+    </a>
+    <button class="block w-max text-end text-zinc-600 hover:text-zinc-900 duration-200 underline-offset-2 underline outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2 justify-self-end" id="eraseProgressCTA" onclick="eraseProgress()">Clear progress</button>
   </div>
   <div class="flex flex-col gap-40 px-8 md:px-12 py-16">
     <div class="flex flex-col gap-24 mx-auto">
@@ -77,26 +83,75 @@ const MDs = await Promise.all(
     />
   </div>  
 </Base>
-<script>
+<script client:load>
   const translation = window.location.href.split("/").slice(-1)[0].split("#")[0];
-  
   let readUpTo = localStorage.getItem(translation);
 
   if (readUpTo){
-    const continueCTA = document.querySelector<HTMLAnchorElement>("#continueCTA");
-    if(continueCTA){
-      continueCTA.href = `#${readUpTo}`
-      continueCTA.innerText = `Continue from chapter ${readUpTo}`
-    } else {
-      console.log("couldn't find #continueCTA")
-    }
-
     const continueToolbar = document.querySelector("#continueToolbar");
     if(continueToolbar){
       continueToolbar.classList.remove("hidden");
       continueToolbar.classList.add("flex")
+      continueToolbar.classList.remove("opacity-0");
+      continueToolbar.classList.add("opacity-100");
     } else {
       console.log("couldn't find #continueToolbar")
+    }
+
+    const continueCTA = document.querySelector("#continueCTA");
+    if(continueCTA){
+      continueCTA.href = `#${readUpTo}`
+    } else {
+      console.log("couldn't find #continueCTA")
+    }
+
+    const continueCTALabel = document.querySelector("#continueCTALabel");
+    if(continueCTALabel){
+      continueCTALabel.innerText = `Continue from chapter ${readUpTo}`
+    } else {
+      console.log("couldn't find #continueCTALabel")
+    }
+
+    const eraseProgressCTA = document.querySelector("#eraseProgressCTA")
+    if(eraseProgressCTA){
+      eraseProgressCTA.classList.remove("hidden");
+      eraseProgressCTA.classList.add("flex")
+    } else {
+      console.log("couldn't find #eraseProgressCTA")
+    }
+  }
+
+  function eraseProgress() {
+    const continueCTA = document.querySelector("#continueCTA");
+    const eraseProgressCTA = document.querySelector("#eraseProgressCTA")
+
+    if (!!readUpTo && !!eraseProgressCTA && !!continueCTA) {
+      localStorage.removeItem(translation);
+      readUpTo = 0;
+
+      continueCTA.classList.remove("opacity-100");
+      continueCTA.classList.add("opacity-0");
+      continueCTA.classList.add("translate-x-2");
+
+      eraseProgressCTA.textContent = "Done!";
+      eraseProgressCTA.classList.add("pointer-events-none");
+      eraseProgressCTA.classList.remove("underline");
+      
+      setTimeout(() => {
+        // After progress indicatos fade out
+        continueCTA.classList.add("pointer-events-none");
+      }, 150);
+      
+      setTimeout(() => {
+        eraseProgressCTA.classList.add("opacity-0");
+        eraseProgressCTA.classList.add("translate-x-4");
+      }, 1000);
+
+      setTimeout(() => {
+        // After eraseButton fade out
+        continueCTA.classList.remove("flex");
+        continueCTA.classList.add("hidden")
+      }, 1150)
     }
   }
 
