@@ -30,7 +30,7 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
     >
       {
         frontmatters
-          .sort((a, b) => (a.Date > b.Date ? 1 : -1))
+          .sort((a, b) => (a.Date < b.Date ? 1 : -1))
           .map((frontmatter) => (
             <li>
               <a
