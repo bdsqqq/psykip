@@ -38,22 +38,27 @@ const MDs = await Promise.all(
   description={`Compare the translation for ${chapter} of the Enchiridion. We compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it.`}
 >
   <div class="flex flex-col px-12 py-16 justify-between min-h-screen gap-40">
-    <div class="flex flex-col gap-20 mx-auto">
-      {
-        MDs.sort((a, b) =>
-          a.frontmatter.Date < b.frontmatter.Date ? 1 : -1
-        ).map((MD) => (
-          <Chapter
-            translationCode={MD.frontmatter.Code}
-            chapterNumber={chapter.toString()}
-            chapterHead={`${chapter} — ${MD.frontmatter.Translator}`}
-            chapterHeadId={MD.frontmatter.Code}
-            chapterId={`${MD.frontmatter.Code}-${chapter}`}
-          >
-            <MD.Content key={chapter} />
-          </Chapter>
-        ))
-      }
+    <div class="md:overflow-auto md:-mx-12 md:pb-6">
+      <div class="flex flex-col md:flex-row md:w-max gap-20 md:px-12">
+        {
+          MDs.sort((a, b) =>
+            a.frontmatter.Date < b.frontmatter.Date ? 1 : -1
+          ).map((MD) => (
+            <div class="md:max-w-[80vw]">
+              <Chapter
+                colOnly={true}
+                translationCode={MD.frontmatter.Code}
+                chapterNumber={chapter.toString()}
+                chapterHead={`${chapter} — ${MD.frontmatter.Translator}`}
+                chapterHeadId={MD.frontmatter.Code}
+                chapterId={`${MD.frontmatter.Code}-${chapter}`}
+              >
+                <MD.Content key={chapter} />
+              </Chapter>
+            </div>
+          ))
+        }
+      </div>
     </div>
 
     <footer class="flex justify-end">

@@ -5,6 +5,7 @@ import type { TranslationCode } from "../data/codes";
 import Icon from "astro-icon";
 
 export interface Props {
+  colOnly?: boolean;
   chapterHead: string;
   chapterHeadId: string;
   translationCode: TranslationCode;
@@ -13,6 +14,7 @@ export interface Props {
 }
 
 const {
+  colOnly,
   chapterHead,
   chapterHeadId,
   translationCode,
@@ -22,22 +24,28 @@ const {
 ---
 
 <div
-  class="c group flex flex-col gap-4 sm:gap-0 sm:grid sm:grid-cols-[3fr,13fr] w-full"
+  class={`c group flex flex-col gap-4 ${
+    !colOnly && "sm:gap-0 sm:grid sm:grid-cols-[3fr,13fr]"
+  } w-full`}
 >
   <div class="relative col-start-1 row-start-1">
     <div
-      class="flex sm:flex-col gap-6 col-start-1 row-start-1 sticky top-2 h-min sm:max-w-[10ch]"
+      class={`flex justify-between gap-6 col-start-1 row-start-1 sticky top-2 h-min items-center ${
+        !colOnly ? "sm:flex-col sm:max-w-[10ch]" : "sm:max-w-none"
+      }`}
     >
       <h2 id={chapterHeadId} class="text-2xl font-thin">
         <a href={`#${chapterHeadId}`}>{chapterHead}</a>
       </h2>
       <ul
-        class="flex sm:flex-col items-center sm:items-start gap-4 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity"
+        class={`flex items-center sm:items-start gap-4 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity ${
+          !colOnly && "sm:flex-col"
+        }`}
       >
         <li>
           <a
             class="flex -m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors"
-            href={`/compare/${chapterNumber}#${translationCode}`}
+            href={`/compare/${chapterNumber}`}
             title={`See all chapter ${chapterNumber} translations`}
           >
             <Icon
