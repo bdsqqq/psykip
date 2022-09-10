@@ -15,8 +15,20 @@ export default function CopyChapterContent({
     }, 2000);
   });
 
+  createEffect(() => {
+    // To make sure this button only appears when JS is enabled, let's start with it hidden and use JS to show it.
+
+    const copyButton = document.getElementById(`${contentId}-copy`);
+    copyButton?.classList.remove("pointer-events-none");
+    copyButton?.classList.remove("opacity-0");
+    copyButton?.classList.add("opacity-100");
+  });
+
   return (
-    <div class="relative flex flex-col sm:flex-row items-center gap-1">
+    <div
+      id={`${contentId}-copy`}
+      class="relative pointer-events-none opacity-0 transition-opacity flex flex-col sm:flex-row items-center gap-1"
+    >
       <button
         title="Copy chapter content"
         class="-m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors"

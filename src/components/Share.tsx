@@ -21,8 +21,22 @@ export default function Share({
     }, 2000);
   });
 
+  createEffect(() => {
+    // To make sure this button only appears when JS is enabled, let's start with it hidden and use JS to show it.
+
+    const shareDiv = document.getElementById(
+      `${translationCode}-${chapterNumber}-share`
+    );
+    shareDiv?.classList.remove("pointer-events-none");
+    shareDiv?.classList.remove("opacity-0");
+    shareDiv?.classList.add("opacity-100");
+  });
+
   return (
-    <div class="relative flex flex-col sm:flex-row items-center gap-1">
+    <div
+      id={`${translationCode}-${chapterNumber}-share`}
+      class="relative pointer-events-none opacity-0 transition-opacity flex flex-col sm:flex-row items-center gap-1"
+    >
       <button
         title="Share"
         class="-m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors"
