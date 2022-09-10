@@ -1,0 +1,74 @@
+---
+import type { MarkdownInstance } from "astro";
+import type { Frontmatter as ChapterFrontmatter } from "../read/[translation]/[chapter].astro";
+import Base from "../../layouts/base.astro";
+import Chapter from "../../components/Chapter.astro";
+import codes from "../../data/codes";
+import type { TranslationCode, Chapter as ChapterType } from "../../data/codes";
+import { Icon } from "astro-icon";
+
+export function getStaticPaths() {
+  return Array(53)
+    .fill(0)
+    .map((_, i) => {
+      return {
+        params: {
+          chapter: (i + 1).toString(),
+        },
+      };
+    });
+}
+
+const { chapter } = Astro.params as unknown as {
+  chapter: ChapterType;
+};
+
+const MDs = await Promise.all(
+  codes.map(
+    async (code) =>
+      (await import(
+        `../../data/${code}/chapters/${chapter}.md`
+      )) as MarkdownInstance<ChapterFrontmatter>
+  )
+);
+---
+
+<Base
+  title={`Compare the translation for ${chapter}, of the Enchiridion — The manual, a compilation of the Enchiridion translations`}
+  description={`Compare the translation for ${chapter} of the Enchiridion. We compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it.`}
+>
+  <div class="flex flex-col px-12 py-16 justify-between min-h-screen gap-40">
+    <div class="flex flex-col gap-20 mx-auto">
+      {
+        MDs.sort((a, b) =>
+          a.frontmatter.Date < b.frontmatter.Date ? 1 : -1
+        ).map((MD) => (
+          <Chapter
+            translationCode={MD.frontmatter.Code}
+            chapterNumber={chapter.toString()}
+            chapterHead={`${chapter} — ${MD.frontmatter.Translator}`}
+            chapterHeadId={MD.frontmatter.Code}
+            chapterId={`${MD.frontmatter.Code}-${chapter}`}
+          >
+            <MD.Content key={chapter} />
+          </Chapter>
+        ))
+      }
+    </div>
+
+    <footer class="flex justify-end">
+      <div class="w-max">
+        <a
+          class="inline-flex items-center group outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-2 ring-offset-zinc-100 underline underline-offset-2"
+          href="/about/translations"
+        >
+          See translation sources
+          <Icon
+            class="inline h-[15px] w-[15px] group-hover:translate-x-[2px] group-hover:-translate-y-[1px] group-focus-visible:translate-x-[2px] group-focus-visible:-translate-y-[1px] transition-transform transform translate-y-[1px]"
+            name="radix-icons:arrow-right"
+          />
+        </a>
+      </div>
+    </footer>
+  </div>
+</Base>

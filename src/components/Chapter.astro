@@ -5,12 +5,19 @@ import type { TranslationCode } from "../data/codes";
 
 export interface Props {
   chapterHead: string;
+  chapterHeadId: string;
   translationCode: TranslationCode;
   chapterNumber: string;
   chapterId: string;
 }
 
-const { chapterHead, translationCode, chapterNumber, chapterId } = Astro.props;
+const {
+  chapterHead,
+  chapterHeadId,
+  translationCode,
+  chapterNumber,
+  chapterId,
+} = Astro.props;
 ---
 
 <div
@@ -18,10 +25,10 @@ const { chapterHead, translationCode, chapterNumber, chapterId } = Astro.props;
 >
   <div class="relative col-start-1 row-start-1">
     <div
-      class="flex sm:flex-col gap-6 col-start-1 row-start-1 sticky top-2 h-min"
+      class="flex sm:flex-col gap-6 col-start-1 row-start-1 sticky top-2 h-min sm:max-w-[10ch]"
     >
-      <h2 id={chapterHead} class="text-2xl font-thin">
-        <a href={`#${chapterHead}`}>{chapterHead}</a>
+      <h2 id={chapterHeadId} class="text-2xl font-thin">
+        <a href={`#${chapterHeadId}`}>{chapterHead}</a>
       </h2>
       <ul
         class="flex sm:flex-col items-center sm:items-start gap-4 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity"
