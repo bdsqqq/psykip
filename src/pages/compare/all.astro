@@ -1,0 +1,71 @@
+---
+import type { Frontmatter as ChapterFrontmatter } from "../read/[translation]/[chapter].astro";
+import Base from "../../layouts/base.astro";
+import Chapter from "../../components/Chapter.astro";
+import { Icon } from "astro-icon";
+
+const chapters = Array(53)
+  .fill(0)
+  .map((_, i) => {
+    return (i + 1).toString();
+  });
+
+const MDs = await Astro.glob<ChapterFrontmatter>("../../data/**/chapters/*.md");
+---
+
+<Base
+  title={`Compare translations of all chapters of the Enchiridion — The manual, a compilation of the Enchiridion translations`}
+  description={`Compare translations of all chapters of the Enchiridion. We compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it.`}
+>
+  <div class="flex flex-col px-12 py-16 justify-between min-h-screen gap-40">
+    <div id="read" class="lg:max-w-[25%]">
+      <h1 class="text-2xl">
+        This page compiles all 424 chapters from our 8 translations. We
+        recommend using it to find specific quotes with your browser's built-in
+        search.
+      </h1>
+    </div>
+
+    <div class="flex flex-col gap-20">
+      {
+        chapters.map((chapter) => (
+          <div id={chapter} class="md:overflow-auto md:-mx-12 md:pb-6">
+            <div class="flex flex-col md:flex-row md:w-max gap-20 md:px-12">
+              {MDs.filter((MD) => MD.frontmatter.Chapter == chapter)
+                .sort((a, b) =>
+                  a.frontmatter.Date < b.frontmatter.Date ? 1 : -1
+                )
+                .map((MD) => (
+                  <div class="md:max-w-[80vw]">
+                    <Chapter
+                      colOnly={true}
+                      translationCode={MD.frontmatter.Code}
+                      chapterNumber={MD.frontmatter.Chapter}
+                      chapterHead={`${MD.frontmatter.Chapter} — ${MD.frontmatter.Translator}`}
+                      chapterHeadId={MD.frontmatter.Code}
+                      chapterId={`${MD.frontmatter.Code}-${MD.frontmatter.Chapter}`}
+                    >
+                      <MD.Content key={MD.frontmatter.Chapter} />
+                    </Chapter>
+                  </div>
+                ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <footer class="flex justify-end">
+      <div class="w-max">
+        <a
+          class="flex gap-1 items-center p-2 -ml-2 -mt-2 w-max underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2 group"
+          href="/about/translations"
+          >See translations sources <Icon
+            class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-focus-visible:translate-x-1 group-hover:translate-x-1"
+            name="radix-icons:arrow-right"
+          />
+        </a>
+      </div>
+    </footer>
+  </div>
+</Base>
