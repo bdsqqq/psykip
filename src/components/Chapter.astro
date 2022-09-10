@@ -2,6 +2,7 @@
 import Share from "./Share";
 import CopyChapterContent from "./CopyChapterContent";
 import type { TranslationCode } from "../data/codes";
+import Icon from "astro-icon";
 
 export interface Props {
   chapterHead: string;
@@ -33,6 +34,18 @@ const {
       <ul
         class="flex sm:flex-col items-center sm:items-start gap-4 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity"
       >
+        <li>
+          <a
+            class="flex -m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors"
+            href={`/compare/${chapterNumber}#${translationCode}`}
+            title={`See all chapter ${chapterNumber} translations`}
+          >
+            <Icon
+              class="inline h-[15px] w-[15px] transform translate-y-[1px]"
+              name="radix-icons:view-vertical"
+            />
+          </a>
+        </li>
         <li>
           <Share
             client:load
