@@ -2,6 +2,7 @@
 import type { Frontmatter } from "../read/[translation]/[chapter].astro";
 import Base from "../../layouts/base.astro";
 import ExternalLink from "../../components/ExternalLink.astro";
+import Nav from "../../components/Nav.astro";
 
 const MDs = await Astro.glob<Frontmatter>("../../data/**/index.md");
 const frontmatters = MDs.map((MD) => MD.frontmatter);
@@ -11,6 +12,7 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
   title="Translation sources — The manual, a compilation of the Enchiridion translations"
   description="Where do we compiled translations from? to have diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it."
 >
+  <Nav href="/about" label="About" />
   <main
     class="flex flex-col md:grid md:grid-cols-2 gap-16 min-h-screen px-12 py-16 max-w-5xl mx-auto"
   >
