@@ -9,6 +9,7 @@ import type {
 } from "../../../data/codes";
 import SourceFooter from "../../../components/SourceFooter.astro";
 import { Icon } from "astro-icon";
+import Nav from "../../../components/Nav.astro";
 
 export function getStaticPaths() {
   return codes
@@ -59,6 +60,7 @@ const MD = (await import(
   title={`Chapter ${chapter}, ${MD.frontmatter.Translator}'s translation — The manual, a compilation of the Enchiridion translations`} 
   description={`Read the chapter ${chapter} of ${MD.frontmatter.Translator}'s Translation of the Enchiridion. We compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it.`}
 >
+  <Nav href={`/read/${translation}`} label={`Full ${MD.frontmatter.Translator} translation`} />
   <div class="flex flex-col px-12 py-16 justify-between min-h-screen gap-40">
     <div class="flex flex-col gap-20 mx-auto">
       <Chapter
