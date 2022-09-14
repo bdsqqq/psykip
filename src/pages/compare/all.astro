@@ -3,6 +3,7 @@ import type { Frontmatter as ChapterFrontmatter } from "../read/[translation]/[c
 import Base from "../../layouts/base.astro";
 import Chapter from "../../components/Chapter.astro";
 import { Icon } from "astro-icon";
+import Nav from "../../components/Nav.astro";
 
 const chapters = Array(53)
   .fill(0)
@@ -17,6 +18,7 @@ const MDs = await Astro.glob<ChapterFrontmatter>("../../data/**/chapters/*.md");
   title={`Compare translations of all chapters of the Enchiridion — The manual, a compilation of the Enchiridion translations`}
   description={`Compare translations of all chapters of the Enchiridion. We compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it.`}
 >
+  <Nav href="/#read" label="Translations list" />
   <div class="flex flex-col px-12 py-16 justify-between min-h-screen gap-40">
     <div id="read" class="lg:max-w-[25%]">
       <h1 class="text-2xl">

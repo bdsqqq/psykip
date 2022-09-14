@@ -1,4 +1,5 @@
 ---
+import Nav from "../../components/Nav.astro";
 import Read from "../../components/Read.astro";
 import Base from "../../layouts/base.astro";
 ---
@@ -8,6 +9,7 @@ import Base from "../../layouts/base.astro";
   description="We compiled translations from diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it."
 >
   <section class="min-h-screen">
+    <Nav href="/" label="Home" />
     <Read />
   </section>
 </Base>
