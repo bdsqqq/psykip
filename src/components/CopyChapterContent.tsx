@@ -31,7 +31,7 @@ export default function CopyChapterContent({
     >
       <button
         title="Copy chapter content"
-        class="-m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors cursor-copy"
+        class="-m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors cursor-copy outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2"
         onClick={async () => {
           try {
             const textContent = document.getElementById(contentId)?.innerText;

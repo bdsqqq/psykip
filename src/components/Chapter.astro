@@ -35,7 +35,11 @@ const {
       }`}
     >
       <h2 id={chapterHeadId} class="text-2xl font-thin">
-        <a href={`#${chapterHeadId}`}>{chapterHead}</a>
+        <a
+          class="outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2"
+          href={`#${chapterHeadId}`}
+          >{chapterHead}
+        </a>
       </h2>
       <ul
         class={`flex items-center sm:items-start gap-4 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity ${
@@ -44,7 +48,7 @@ const {
       >
         <li>
           <a
-            class="flex -m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors"
+            class="flex -m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2"
             href={`/compare/${chapterNumber}`}
             title={`See all chapter ${chapterNumber} translations`}
           >

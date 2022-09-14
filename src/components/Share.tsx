@@ -39,7 +39,7 @@ export default function Share({
     >
       <button
         title="Share"
-        class="-m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors"
+        class="-m-2 p-2 text-zinc-500 hover:text-zinc-900 transition-colors outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2"
         onClick={async () => {
           const url = `${appUrl}/read/${translationCode}/${chapterNumber}`;
 
