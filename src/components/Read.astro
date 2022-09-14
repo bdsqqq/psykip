@@ -25,48 +25,65 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
         >Erase reading progress
       </button>
     </div>
-    <ul
-      class="flex flex-col transition-colors focus-within:text-zinc-400 hover:text-zinc-400 pointer-events-none divide-y divide-zinc-300 border-y border-zinc-300 h-min"
-    >
-      {
-        frontmatters
-          .sort((a, b) => (a.Date < b.Date ? 1 : -1))
-          .map((frontmatter) => (
-            <li>
-              <a
-                class="py-6 block transition-colors focus:text-zinc-900 hover:text-zinc-900 pointer-events-auto outline-none ring-zinc-500 focus-visible:ring-2 focus-within:z-10 relative"
-                href={`/read/${frontmatter.Code}`}
-              >
-                <div class="flex gap-4 justify-between">
-                  <div
-                    class="inline-flex gap-4"
-                    id={`read-${frontmatter.Code}`}
-                  >
-                    <span>{frontmatter.Translator}</span>
-                    <span
-                      data-read-cta={frontmatter.Code}
-                      class="hidden opacity-0 transition-all items-center gap-4 text-zinc-500"
+    <div class="group pointer-events-none">
+      <ul
+        class="peer flex flex-col transition-colors group-focus-within:text-zinc-400 group-hover:text-zinc-400 pointer-events-none divide-y divide-zinc-300 border-y border-zinc-300 h-min"
+      >
+        {
+          frontmatters
+            .sort((a, b) => (a.Date < b.Date ? 1 : -1))
+            .map((frontmatter) => (
+              <li>
+                <a
+                  class="py-6 block transition-colors focus:text-zinc-900 hover:text-zinc-900 pointer-events-auto outline-none ring-zinc-500 focus-visible:ring-2 focus-within:z-10 relative"
+                  href={`/read/${frontmatter.Code}`}
+                >
+                  <div class="flex gap-4 justify-between">
+                    <div
+                      class="inline-flex gap-4"
+                      id={`read-${frontmatter.Code}`}
                     >
-                      —
-                      <div>
-                        <span id={`${frontmatter.Code}-slot`} />
-                        <Icon
-                          class="inline h-[15px] w-[15px]"
-                          name="radix-icons:reader"
-                        />
-                      </div>
-                    </span>
+                      <span>{frontmatter.Translator}</span>
+                      <span
+                        data-read-cta={frontmatter.Code}
+                        class="hidden opacity-0 transition-all items-center gap-4 text-zinc-500"
+                      >
+                        —
+                        <div>
+                          <span id={`${frontmatter.Code}-slot`} />
+                          <Icon
+                            class="inline h-[15px] w-[15px]"
+                            name="radix-icons:reader"
+                          />
+                        </div>
+                      </span>
+                    </div>
+                    <div class="inline-block w-[4ch] tabular-nums text-right">
+                      {frontmatter.Date}
+                    </div>
                   </div>
-                  <div class="inline-block w-[4ch] tabular-nums text-right">
-                    {frontmatter.Date}
-                  </div>
-                </div>
-              </a>
-            </li>
-          ))
-      }
-    </ul>
+                </a>
+              </li>
+            ))
+        }
+      </ul>
+      <a
+        class="a pointer-events-auto flex gap-1 items-center peer-hover:text-zinc-400 peer-focus-within:text-zinc-400 text-zinc-600 hover:text-zinc-900 transition-colors p-2 -ml-2 w-max underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2"
+        href="/compare/all"
+        >Compare all translations<Icon
+          class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px]"
+          name="radix-icons:arrow-right"
+        />
+      </a>
+    </div>
   </div>
+  <style>
+    /* Group-* applies to all groups so I can't use it on this CTA since it will be activated by the group some nodes up the tree that handles graying stuff on hover */
+    .a:hover > *,
+    .a:focus-visible > * {
+      @apply translate-x-1;
+    }
+  </style>
   <script client:load>
     const readCTAs = document.querySelectorAll("span[data-read-cta]");
     const eraseProgressCTA = document.querySelector("#eraseProgressCTA");
