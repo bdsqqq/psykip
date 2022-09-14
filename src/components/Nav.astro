@@ -1,0 +1,21 @@
+---
+import Icon from "astro-icon";
+
+interface Props {
+  href: string;
+  label: string;
+}
+
+const { href, label } = Astro.props;
+---
+
+<nav class="px-8 md:px-12 py-6 mx-auto">
+  <a
+    class="flex gap-1 items-center text-zinc-600 hover:text-zinc-900 p-2 -ml-2 w-min underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2 group"
+    href={href}
+    ><Icon
+      class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-focus-visible:-translate-x-1 group-hover:-translate-x-1"
+      name={href !== "/" ? "radix-icons:arrow-left" : "radix-icons:pin-left"}
+    />{label}
+  </a>
+</nav>
