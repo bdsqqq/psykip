@@ -134,6 +134,7 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
 
           setTimeout(() => {
             // After progress indicatos fade out
+            eraseProgressCTA.classList.remove("opacity-100");
             CTA.classList.remove("flex");
             CTA.classList.add("hidden");
           }, 150);
