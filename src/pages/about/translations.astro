@@ -12,41 +12,43 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
   title="Translation sources — The manual, a compilation of the Enchiridion translations"
   description="Where do we compiled translations from? to have diferent authors at diferent points of history alongisde the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it."
 >
-  <Nav href="/about" label="About" />
-  <main
-    class="flex flex-col md:grid md:grid-cols-2 gap-16 min-h-screen px-12 py-16 max-w-5xl mx-auto"
-  >
-    <div class="flex flex-col gap-10">
-      <h1 class="uppercase text-6xl font-bold">Sources</h1>
-      <ul class="flex flex-col gap-4">
-        {
-          frontmatters.map((frontmatter) => (
-            <li>
-              {frontmatter.Translator}{" "}
-              {frontmatter.Translator !== "Epictetus"
-                ? "Translation"
-                : "Version"}{" "}
-              from{" "}
-              <ExternalLink url={frontmatter.Source.url}>
-                {frontmatter.Source.label}
-              </ExternalLink>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-    <div class="place-self-end w-full">
-      <p>
-        We took eight markdown files from <ExternalLink
-          url="https://enchiridion.tasuki.org/"
-          >{"Tasuki's website"}
-        </ExternalLink>, then updated their metadata and divided them into 424
-        files for the individual chapters. Our versions of the files are
-        available on <ExternalLink
-          url="https://github.com/bdsqqq/psykip/tree/master/src/data"
-          >{"Github"}
-        </ExternalLink>
-      </p>
-    </div>
-  </main>
+  <div class="min-h-screen">
+    <Nav href="/about" label="About" />
+    <main
+      class="flex flex-col md:grid md:grid-cols-2 gap-16 px-12 py-16 max-w-5xl mx-auto min-h-[85vh]"
+    >
+      <div class="flex flex-col gap-10">
+        <h1 class="uppercase text-6xl font-bold">Sources</h1>
+        <ul class="flex flex-col gap-4">
+          {
+            frontmatters.map((frontmatter) => (
+              <li>
+                {frontmatter.Translator}{" "}
+                {frontmatter.Translator !== "Epictetus"
+                  ? "Translation"
+                  : "Version"}{" "}
+                from{" "}
+                <ExternalLink url={frontmatter.Source.url}>
+                  {frontmatter.Source.label}
+                </ExternalLink>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="place-self-end w-full">
+        <p>
+          We took eight markdown files from <ExternalLink
+            url="https://enchiridion.tasuki.org/"
+            >{"Tasuki's website"}
+          </ExternalLink>, then updated their metadata and divided them into 424
+          files for the individual chapters. Our versions of the files are
+          available on <ExternalLink
+            url="https://github.com/bdsqqq/psykip/tree/master/src/data"
+            >{"Github"}
+          </ExternalLink>
+        </p>
+      </div>
+    </main>
+  </div>
 </Base>
