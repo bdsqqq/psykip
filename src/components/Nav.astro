@@ -15,7 +15,9 @@ const { href, label } = Astro.props;
     href={href}
     ><Icon
       class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-focus-visible:-translate-x-1 group-hover:-translate-x-1"
-      name={href !== "/" ? "radix-icons:arrow-left" : "radix-icons:pin-left"}
+      name={href.split("#")[0] !== "/"
+        ? "radix-icons:arrow-left"
+        : "radix-icons:pin-left"}
     />{label}
   </a>
 </nav>
