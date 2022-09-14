@@ -46,7 +46,7 @@ const MDs = await Promise.all(
           MDs.sort((a, b) =>
             a.frontmatter.Date < b.frontmatter.Date ? 1 : -1
           ).map((MD) => (
-            <div class="md:max-w-[80vw]">
+            <div class="flex flex-col gap-10 justify-between md:max-w-[80vw]">
               <Chapter
                 colOnly={true}
                 translationCode={MD.frontmatter.Code}
@@ -57,6 +57,17 @@ const MDs = await Promise.all(
               >
                 <MD.Content key={chapter} />
               </Chapter>
+              <a
+                href={`/read/${MD.frontmatter.Code}#${MD.frontmatter.Chapter}`}
+                class="flex gap-1 items-center p-2 -ml-2 w-max underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2 group select-none"
+              >
+                Continue reading in the full {MD.frontmatter.Translator}
+                translation
+                <Icon
+                  class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-focus-visible:translate-x-1 group-hover:translate-x-1"
+                  name="radix-icons:arrow-right"
+                />
+              </a>
             </div>
           ))
         }
