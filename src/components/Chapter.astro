@@ -60,13 +60,13 @@ const {
         </li>
         <li>
           <Share
-            client:load
+            client:visible
             chapterNumber={chapterNumber}
             translationCode={translationCode}
           />
         </li>
         <li>
-          <CopyChapterContent client:load contentId={chapterId} />
+          <CopyChapterContent client:visible contentId={chapterId} />
         </li>
       </ul>
     </div>
