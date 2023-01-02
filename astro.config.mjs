@@ -11,9 +11,19 @@ import partytown from "@astrojs/partytown";
 export default defineConfig({
   vite: {
     ssr: {
-      external: ["svgo"]
-    }
+      external: ["svgo"],
+    },
+  },
+  experimental: {
+    contentCollections: true,
   },
   site: "https://psykip.vercel.app",
-  integrations: [tailwind(), prefetch(), solid(), astroImageTools, sitemap(), partytown()]
+  integrations: [
+    tailwind(),
+    prefetch(),
+    solid(),
+    astroImageTools,
+    sitemap(),
+    partytown(),
+  ],
 });

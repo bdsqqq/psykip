@@ -6,10 +6,10 @@ import Icon from "astro-icon";
 
 export interface Props {
   colOnly?: boolean;
-  chapterHead: string;
-  chapterHeadId: string;
+  chapterHead: string | number;
+  chapterHeadId: string | number;
   translationCode: TranslationCode;
-  chapterNumber: string;
+  chapterNumber: number;
   chapterId: string;
 }
 
@@ -34,7 +34,7 @@ const {
         !colOnly ? "sm:flex-col sm:max-w-[10ch]" : "sm:max-w-none"
       }`}
     >
-      <h2 id={chapterHeadId} class="text-2xl font-thin">
+      <h2 id={`${chapterHeadId}`} class="text-2xl font-thin">
         <a
           class="outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2"
           href={`#${chapterHeadId}`}

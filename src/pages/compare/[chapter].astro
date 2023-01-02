@@ -1,6 +1,6 @@
 ---
 import type { MarkdownInstance } from "astro";
-import type { Frontmatter as ChapterFrontmatter } from "../read/[translation]/[chapter].astro";
+import { getCollection } from "astro:content";
 import Base from "../../layouts/base.astro";
 import Chapter from "../../components/Chapter.astro";
 import codes from "../../data/codes";
@@ -24,14 +24,9 @@ const { chapter } = Astro.params as unknown as {
   chapter: ChapterType;
 };
 
-const MDs = await Promise.all(
-  codes.map(
-    async (code) =>
-      (await import(
-        `../../data/${code}/chapters/${chapter}.md`
-      )) as MarkdownInstance<ChapterFrontmatter>
-  )
-);
+const chapters = await getCollection("translations", ({ data }) => {
+  return data.Chapter === parseInt(chapter);
+});
 ---
 
 <Base
@@ -43,33 +38,36 @@ const MDs = await Promise.all(
     <div class="md:overflow-auto md:-mx-12 md:pb-6">
       <div class="flex flex-col md:flex-row md:w-max gap-20 md:px-12">
         {
-          MDs.sort((a, b) =>
-            a.frontmatter.Date < b.frontmatter.Date ? 1 : -1
-          ).map((MD) => (
-            <div class="flex flex-col gap-10 justify-between md:max-w-[80vw]">
-              <Chapter
-                colOnly={true}
-                translationCode={MD.frontmatter.Code}
-                chapterNumber={chapter.toString()}
-                chapterHead={`${chapter} — ${MD.frontmatter.Translator}`}
-                chapterHeadId={MD.frontmatter.Code}
-                chapterId={`${MD.frontmatter.Code}-${chapter}`}
-              >
-                <MD.Content key={chapter} />
-              </Chapter>
-              <a
-                href={`/read/${MD.frontmatter.Code}#${MD.frontmatter.Chapter}`}
-                class="items-center p-2 -ml-2 text-zinc-600 hover:text-zinc-900 focus:text-zinc-900 transition-colors underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2 group select-none"
-              >
-                Continue reading in the full {MD.frontmatter.Translator}
-                translation
-                <Icon
-                  class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-focus-visible:translate-x-1 group-hover:translate-x-1"
-                  name="radix-icons:arrow-right"
-                />
-              </a>
-            </div>
-          ))
+          chapters
+            .sort((a, b) => (a.data.Date < b.data.Date ? 1 : -1))
+            .map(async (chapter) => {
+              const { Content } = await chapter.render();
+              return (
+                <div class="flex flex-col gap-10 justify-between md:max-w-[80vw]">
+                  <Chapter
+                    colOnly={true}
+                    translationCode={chapter.data.Code}
+                    chapterNumber={chapter.data.Chapter}
+                    chapterHead={`${chapter.data.Chapter} — ${chapter.data.Translator}`}
+                    chapterHeadId={chapter.data.Code}
+                    chapterId={`${chapter.data.Code}-${chapter.data.Chapter}`}
+                  >
+                    <Content />
+                  </Chapter>
+                  <a
+                    href={`/read/${chapter.data.Code}#${chapter.data.Chapter}`}
+                    class="items-center p-2 -ml-2 text-zinc-600 hover:text-zinc-900 focus:text-zinc-900 transition-colors underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2 group select-none"
+                  >
+                    Continue reading in the full {chapter.data.Translator}
+                    translation
+                    <Icon
+                      class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-focus-visible:translate-x-1 group-hover:translate-x-1"
+                      name="radix-icons:arrow-right"
+                    />
+                  </a>
+                </div>
+              );
+            })
         }
       </div>
     </div>

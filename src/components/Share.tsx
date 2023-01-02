@@ -9,7 +9,7 @@ export default function Share({
   chapterNumber,
 }: {
   translationCode: TranslationCode;
-  chapterNumber: string;
+  chapterNumber: number;
 }) {
   const [isSuccess, setIsSuccess] = createSignal("");
   createEffect(() => {
