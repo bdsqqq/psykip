@@ -10,19 +10,19 @@
     "astro": "astro"
   },
   "devDependencies": {
-    "@astrojs/partytown": "^1.0.0",
+    "@astrojs/partytown": "^1.0.2",
     "@astrojs/prefetch": "^0.0.7",
-    "@astrojs/solid-js": "^1.0.0",
-    "@astrojs/tailwind": "^1.0.0",
-    "astro": "^1.0.1",
-    "prettier": "^2.7.1",
-    "prettier-plugin-astro": "^0.5.0",
-    "solid-js": "^1.4.3"
+    "@astrojs/solid-js": "^1.2.3",
+    "@astrojs/tailwind": "^1.0.1",
+    "astro": "^1.8.0",
+    "prettier": "^2.8.1",
+    "prettier-plugin-astro": "^0.5.5",
+    "solid-js": "^1.6.6"
   },
   "dependencies": {
     "@astrojs/sitemap": "^1.0.0",
     "@fontsource/roboto-slab": "^4.5.9",
     "astro-icon": "^0.7.3",
-    "astro-imagetools": "^0.6.10"
+    "astro-imagetools": "^0.6.17"
   }
 }

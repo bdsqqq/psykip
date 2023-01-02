@@ -1,11 +1,15 @@
 ---
-import type { Frontmatter } from "../read/[translation]/[chapter].astro";
+import { getCollection } from "astro:content";
 import Base from "../../layouts/base.astro";
 import ExternalLink from "../../components/ExternalLink.astro";
 import Nav from "../../components/Nav.astro";
 
-const MDs = await Astro.glob<Frontmatter>("../../data/**/index.md");
-const frontmatters = MDs.map((MD) => MD.frontmatter);
+const ChapterOnes = await getCollection("translations", ({ data }) => {
+  return data.Chapter === 1;
+});
+const translations = ChapterOnes.map((chapterOne) => {
+  return chapterOne.data;
+});
 ---
 
 <Base
@@ -21,15 +25,15 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
         <h1 class="uppercase text-6xl font-bold">Sources</h1>
         <ul class="flex flex-col gap-4">
           {
-            frontmatters.map((frontmatter) => (
+            translations.map((translation) => (
               <li>
-                {frontmatter.Translator}{" "}
-                {frontmatter.Translator !== "Epictetus"
+                {translation.Translator}{" "}
+                {translation.Translator !== "Epictetus"
                   ? "Translation"
                   : "Version"}{" "}
                 from{" "}
-                <ExternalLink url={frontmatter.Source.url}>
-                  {frontmatter.Source.label}
+                <ExternalLink url={translation.Source.url}>
+                  {translation.Source.label}
                 </ExternalLink>
               </li>
             ))

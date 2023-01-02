@@ -17,5 +17,6 @@
     "importsNotUsedAsValues": "error",
     "jsxImportSource": "solid-js",
     "jsx": "preserve",
+    "strictNullChecks": true
   }
 }

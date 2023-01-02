@@ -1,10 +1,14 @@
 ---
-import type { Frontmatter } from "../pages/read/[translation]/[chapter].astro";
-
+import { getCollection } from "astro:content";
 import { Icon } from "astro-icon";
 
-const MDs = await Astro.glob<Frontmatter>("../data/**/index.md");
-const frontmatters = MDs.map((MD) => MD.frontmatter);
+const ChapterOnes = await getCollection("translations", ({ data }) => {
+  return data.Chapter === 1;
+});
+const translations = ChapterOnes.map((chapterOne) => {
+  const { Code, Date, Translator } = chapterOne.data;
+  return { Code, Date, Translator };
+});
 ---
 
 <div
@@ -30,27 +34,27 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
         class="peer flex flex-col transition-colors group-focus-within:text-zinc-400 group-hover:text-zinc-400 pointer-events-none divide-y divide-zinc-300 border-y border-zinc-300 h-min"
       >
         {
-          frontmatters
+          translations
             .sort((a, b) => (a.Date < b.Date ? 1 : -1))
-            .map((frontmatter) => (
+            .map((translation) => (
               <li>
                 <a
                   class="py-6 block transition-colors focus:text-zinc-900 hover:text-zinc-900 pointer-events-auto outline-none ring-zinc-500 focus-visible:ring-2 focus-within:z-10 relative"
-                  href={`/read/${frontmatter.Code}`}
+                  href={`/read/${translation.Code}`}
                 >
                   <div class="flex gap-4 justify-between">
                     <div
                       class="inline-flex gap-4"
-                      id={`read-${frontmatter.Code}`}
+                      id={`read-${translation.Code}`}
                     >
-                      <span>{frontmatter.Translator}</span>
+                      <span>{translation.Translator}</span>
                       <span
-                        data-read-cta={frontmatter.Code}
+                        data-read-cta={translation.Code}
                         class="hidden opacity-0 transition-all items-center gap-4 text-zinc-500"
                       >
                         —
                         <div>
-                          <span id={`${frontmatter.Code}-slot`} />
+                          <span id={`${translation.Code}-slot`} />
                           <Icon
                             class="inline h-[15px] w-[15px]"
                             name="radix-icons:reader"
@@ -59,7 +63,7 @@ const frontmatters = MDs.map((MD) => MD.frontmatter);
                       </span>
                     </div>
                     <div class="inline-block w-[4ch] tabular-nums text-right">
-                      {frontmatter.Date}
+                      {translation.Date}
                     </div>
                   </div>
                 </a>

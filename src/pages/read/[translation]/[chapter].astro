@@ -1,5 +1,5 @@
 ---
-import type { MarkdownInstance } from "astro";
+import { getEntry } from "astro:content";
 import Base from "../../../layouts/base.astro";
 import Chapter from "../../../components/Chapter.astro";
 import codes from "../../../data/codes";
@@ -38,46 +38,36 @@ const { translation, chapter } = Astro.params as unknown as {
   chapter: ChapterType;
 };
 
-export interface Frontmatter {
-  Author: string;
-  Title: string;
-  Translator: string;
-  Date: string;
-  Source: {
-    label: string;
-    url: string;
-  };
-  Code: TranslationCode;
-  Chapter: string;
-}
+const entry = await getEntry("translations", `${translation}/${chapter}.md`);
 
-const MD = (await import(
-  `../../../data/${translation}/chapters/${chapter}.md`
-)) as MarkdownInstance<Frontmatter>;
+const { Content } = await entry.render();
 ---
 
-<Base 
-  title={`Chapter ${chapter}, ${MD.frontmatter.Translator}'s translation — The manual, a compilation of the Enchiridion translations`} 
-  description={`Read the chapter ${chapter} of ${MD.frontmatter.Translator}'s Translation of the Enchiridion. We compiled translations from different authors at different points of history alongside the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it.`}
+<Base
+  title={`Chapter ${chapter}, ${entry.data.Translator}'s translation — The manual, a compilation of the Enchiridion translations`}
+  description={`Read the chapter ${chapter} of ${entry.data.Translator}'s Translation of the Enchiridion. We compiled translations from different authors at different points of history alongside the original Enchiridion from Epictetus to make sure you can easily read and share your favorite version of it.`}
 >
-  <Nav href={`/read/${translation}`} label={`Full ${MD.frontmatter.Translator} translation`} />
+  <Nav
+    href={`/read/${translation}`}
+    label={`Full ${entry.data.Translator} translation`}
+  />
   <div class="flex flex-col px-12 py-16 justify-between min-h-screen gap-40">
     <div class="flex flex-col gap-20 mx-auto">
       <Chapter
         translationCode={translation}
-        chapterNumber={chapter.toString()}
-        chapterHead={MD.frontmatter.Chapter}
-        chapterHeadId={MD.frontmatter.Chapter}
+        chapterNumber={entry.data.Chapter}
+        chapterHead={entry.data.Chapter}
+        chapterHeadId={entry.data.Chapter}
         chapterId={`${translation}-${chapter}`}
       >
-        <MD.Content key={chapter} />
+        <Content />
       </Chapter>
 
       <div>
         <a
           class="flex gap-1 items-center p-2 -ml-2 w-max underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2 group"
           rel="prefetch"
-          href={`/read/${MD.frontmatter.Code}#${MD.frontmatter.Chapter}`}
+          href={`/read/${entry.data.Code}#${entry.data.Chapter}`}
           >Continue reading<Icon
             class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-focus-visible:translate-x-1 group-hover:translate-x-1"
             name="radix-icons:arrow-right"
@@ -86,9 +76,6 @@ const MD = (await import(
       </div>
     </div>
 
-    <SourceFooter
-      url={MD.frontmatter.Source.url}
-      label={MD.frontmatter.Source.label}
-    />
+    <SourceFooter url={entry.data.Source.url} label={entry.data.Source.label} />
   </div>
 </Base>
