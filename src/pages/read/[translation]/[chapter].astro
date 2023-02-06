@@ -1,5 +1,5 @@
 ---
-import { getEntry } from "astro:content";
+import { getEntryBySlug } from "astro:content";
 import Base from "../../../layouts/base.astro";
 import Chapter from "../../../components/Chapter.astro";
 import codes from "../../../data/codes";
@@ -38,7 +38,14 @@ const { translation, chapter } = Astro.params as unknown as {
   chapter: ChapterType;
 };
 
-const entry = await getEntry("translations", `${translation}/${chapter}.md`);
+const entry = await getEntryBySlug("translations", `${translation}/${chapter}`);
+
+if (!entry) {
+  console.error(`No entry found for ${translation}/${chapter}`);
+  return {
+    status: 404,
+  };
+}
 
 const { Content } = await entry.render();
 ---

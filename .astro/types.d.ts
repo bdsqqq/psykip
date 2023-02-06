@@ -1,43 +1,67 @@
 declare module 'astro:content' {
 	export { z } from 'astro/zod';
 	export type CollectionEntry<C extends keyof typeof entryMap> =
-		typeof entryMap[C][keyof typeof entryMap[C]] & Render;
+		(typeof entryMap)[C][keyof (typeof entryMap)[C]] & Render;
 
-	type BaseCollectionConfig<S extends import('astro/zod').ZodRawShape> = {
+	type BaseSchemaWithoutEffects =
+		| import('astro/zod').AnyZodObject
+		| import('astro/zod').ZodUnion<import('astro/zod').AnyZodObject[]>
+		| import('astro/zod').ZodDiscriminatedUnion<string, import('astro/zod').AnyZodObject[]>
+		| import('astro/zod').ZodIntersection<
+				import('astro/zod').AnyZodObject,
+				import('astro/zod').AnyZodObject
+		  >;
+
+	type BaseSchema =
+		| BaseSchemaWithoutEffects
+		| import('astro/zod').ZodEffects<BaseSchemaWithoutEffects>;
+
+	type BaseCollectionConfig<S extends BaseSchema> = {
 		schema?: S;
 		slug?: (entry: {
 			id: CollectionEntry<keyof typeof entryMap>['id'];
 			defaultSlug: string;
 			collection: string;
 			body: string;
-			data: import('astro/zod').infer<import('astro/zod').ZodObject<S>>;
+			data: import('astro/zod').infer<S>;
 		}) => string | Promise<string>;
 	};
-	export function defineCollection<S extends import('astro/zod').ZodRawShape>(
+	export function defineCollection<S extends BaseSchema>(
 		input: BaseCollectionConfig<S>
 	): BaseCollectionConfig<S>;
 
-	export function getEntry<C extends keyof typeof entryMap, E extends keyof typeof entryMap[C]>(
-		collection: C,
-		entryKey: E
-	): Promise<typeof entryMap[C][E] & Render>;
-	export function getCollection<
+	type EntryMapKeys = keyof typeof entryMap;
+	type AllValuesOf<T> = T extends any ? T[keyof T] : never;
+	type ValidEntrySlug<C extends EntryMapKeys> = AllValuesOf<(typeof entryMap)[C]>['slug'];
+
+	export function getEntryBySlug<
 		C extends keyof typeof entryMap,
-		E extends keyof typeof entryMap[C]
+		E extends ValidEntrySlug<C> | (string & {})
 	>(
 		collection: C,
-		filter?: (data: typeof entryMap[C][E]) => boolean
-	): Promise<(typeof entryMap[C][E] & Render)[]>;
+		// Note that this has to accept a regular string too, for SSR
+		entrySlug: E
+	): E extends ValidEntrySlug<C>
+		? Promise<CollectionEntry<C>>
+		: Promise<CollectionEntry<C> | undefined>;
+	export function getCollection<C extends keyof typeof entryMap, E extends CollectionEntry<C>>(
+		collection: C,
+		filter?: (entry: CollectionEntry<C>) => entry is E
+	): Promise<E[]>;
+	export function getCollection<C extends keyof typeof entryMap>(
+		collection: C,
+		filter?: (entry: CollectionEntry<C>) => unknown
+	): Promise<CollectionEntry<C>[]>;
 
 	type InferEntrySchema<C extends keyof typeof entryMap> = import('astro/zod').infer<
-		import('astro/zod').ZodObject<Required<ContentConfig['collections'][C]>['schema']>
+		Required<ContentConfig['collections'][C]>['schema']
 	>;
 
 	type Render = {
 		render(): Promise<{
 			Content: import('astro').MarkdownInstance<{}>['Content'];
 			headings: import('astro').MarkdownHeading[];
-			injectedFrontmatter: Record<string, any>;
+			remarkPluginFrontmatter: Record<string, any>;
 		}>;
 	};
 
@@ -3015,5 +3039,5 @@ declare module 'astro:content' {
 
 	};
 
-	type ContentConfig = typeof import("./config");
+	type ContentConfig = typeof import("../src/content/config");
 }
