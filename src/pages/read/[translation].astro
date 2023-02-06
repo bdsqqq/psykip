@@ -22,7 +22,7 @@ const { translation } = Astro.params as {
 
 const MDs = await getCollection("translations", ({ data }) => {
   return data.Code === translation;
-});
+}).then((MDs) => MDs.sort((a, b) => a.data.Chapter - b.data.Chapter));
 ---
 
 <Base
