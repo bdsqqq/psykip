@@ -36,7 +36,7 @@ const chapters = await getCollection("translations");
         chapterNumbers.map((chapterNumber) => (
           <div
             id={chapterNumber.toString()}
-            class="md:overflow-auto md:-mx-12 md:pb-6"
+            class="md:overflow-auto scrollbar-thin scrollbar-track-zinc-200 scrollbar-thumb-zinc-400 dark:scrollbar-track-zinc-900 dark:scrollbar-thumb-zinc-700 md:-mx-12 md:pb-6"
           >
             <div class="flex flex-col md:flex-row md:w-max gap-20 md:px-12">
               {chapters
