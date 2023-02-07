@@ -36,7 +36,9 @@ const { title, description } = Astro.props as Props;
       src="https://analytics.igorbedesqui.com/umami.js"
     ></script>
   </head>
-  <body class="min-h-screen relative bg-zinc-200 text-zinc-900">
+  <body
+    class="min-h-screen relative bg-zinc-200 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-200"
+  >
     <div class="overlay"></div>
     <slot />
     <style>
