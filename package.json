@@ -16,7 +16,8 @@
     "astro": "^2.0.6",
     "prettier": "^2.8.1",
     "prettier-plugin-astro": "^0.5.5",
-    "solid-js": "^1.6.6"
+    "solid-js": "^1.6.6",
+    "tailwind-scrollbar": "^2.1.0"
   },
   "dependencies": {
     "@astrojs/sitemap": "^1.0.0",
