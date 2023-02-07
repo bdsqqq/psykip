@@ -36,7 +36,7 @@ const chapters = await getCollection("translations");
         chapterNumbers.map((chapterNumber) => (
           <div
             id={chapterNumber.toString()}
-            class="md:overflow-auto md:-mx-12 md:pb-6"
+            class="md:overflow-auto scrollbar-thin scrollbar-track-zinc-200 scrollbar-thumb-zinc-400 dark:scrollbar-track-zinc-900 dark:scrollbar-thumb-zinc-700 md:-mx-12 md:pb-6"
           >
             <div class="flex flex-col md:flex-row md:w-max gap-20 md:px-12">
               {chapters
@@ -59,7 +59,7 @@ const chapters = await getCollection("translations");
                       </Chapter>
                       <a
                         href={`/read/${chapter.data.Code}#${chapter.data.Chapter}`}
-                        class="items-center p-2 -ml-2 text-zinc-600 hover:text-zinc-900 focus:text-zinc-900 transition-colors underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2 group select-none"
+                        class="items-center p-2 -ml-2 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 focus:text-zinc-900 dark:focus:text-zinc-200 transition-colors underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 dark:ring-offset-zinc-900 ring-offset-2 group select-none"
                       >
                         Continue reading in the full {chapter.data.Translator}
                         translation
@@ -80,7 +80,7 @@ const chapters = await getCollection("translations");
     <footer class="flex justify-end">
       <div class="w-max">
         <a
-          class="flex gap-1 items-center p-2 -ml-2 -mt-2 w-max underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 ring-offset-2 group"
+          class="flex gap-1 items-center p-2 -ml-2 -mt-2 w-max underline underline-offset-2 outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 dark:ring-offset-zinc-900 ring-offset-2 group"
           href="/about/translations"
           >See translations sources <Icon
             class="inline h-[15px] w-[15px] transition-transform transform translate-y-[1px] group-focus-visible:translate-x-1 group-hover:translate-x-1"
