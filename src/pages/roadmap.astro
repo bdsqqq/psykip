@@ -1,0 +1,106 @@
+---
+import Base from "../layouts/base.astro";
+import ExternalLink from "../components/ExternalLink.astro";
+import Nav from "../components/Nav.astro";
+---
+
+<Base
+  title="Roadmap — The manual, a compilation of the Enchiridion translations"
+  description="The home of future features and plans for this site."
+>
+  <div
+    class="flex flex-col gap-16 md:pb-8 pb-16 w-full items-start justify-start min-h-screen"
+  >
+    <div>
+      <Nav href="/" label="Home" />
+    </div>
+    <main
+      class="flex flex-col md:grid md:grid-cols-2 md:grid-rows-2 gap-20 px-8 md:px-12 max-w-5xl mx-auto h-full"
+    >
+      <div>
+        <h1 class="uppercase text-6xl font-bold">Roadmap</h1>
+        <p>
+          This is an <ExternalLink url="https://opensource.org/osd">
+            {"Open Source"}
+          </ExternalLink> project, the source code is available on <ExternalLink
+            url="https://github.com/bdsqqq/psykip"
+            >{"Github"}
+          </ExternalLink>
+        </p>
+      </div>
+      <div class="flex flex-col gap-10 md:row-span-2">
+        <div>
+          <h2 class="text-xl font-bold">Plans</h2>
+          <div class="flex flex-col gap-4">
+            <ul class="flex flex-col gap-4 list-disc">
+              <li>
+                Let a user select some text, then either highlight it or share
+                it.
+              </li>
+
+              <li>
+                User's highlights would be indexed in a new “highlights” page.
+              </li>
+
+              <li>
+                On share, an OG image will be genrrated for quote. (low prio,
+                probably a lot of edge cases)
+              </li>
+
+              <li>
+                From the highlights page the user will be able to navigate to
+                the specific translation and chapter the highlight was taken
+                from.
+              </li>
+
+              <li>
+                The shared highlight should have a query parameter that allows
+                me to reconstruct the shared highlight for the user that visited
+                it; then allow the user to save this specific highlight to their
+                personal “highlights”.
+              </li>
+            </ul>
+
+            <p>
+              Right now, I'm thinking on highligts consisting of a data
+              structure with the translation code, chapter, initial character,
+              last character. This way they're easy so serialize
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="text-xl font-bold">Questions</h2>
+          <ul class="flex flex-col gap-4 list-disc">
+            <li>? How can I render a big selection when sharing?</li>
+
+            <li>
+              ? How can I give a preview of the shared image to the user? is
+              this important?
+            </li>
+
+            <li>? How do deal with overlapping highlights?</li>
+
+            <li>
+              ? should “import & export” functionality be added for highlights?
+            </li>
+
+            <li>
+              ? should highlights belong to “lists”? so I could import a
+              highlight list for studying a specific subject.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="place-self-end w-full">
+        <p>
+          This site was designed and developed by <ExternalLink
+            url="https://igorbedesqui.com"
+          >
+            Igor Bedesqui
+          </ExternalLink>
+        </p>
+      </div>
+    </main>
+  </div>
+</Base>
