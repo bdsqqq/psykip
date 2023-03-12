@@ -20,7 +20,7 @@
     "tailwind-scrollbar": "^2.1.0"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^1.0.0",
+    "@astrojs/sitemap": "^1.0.1",
     "@astrojs/tailwind": "^3.0.1",
     "@fontsource/roboto-slab": "^4.5.9",
     "astro-icon": "^0.7.3",
