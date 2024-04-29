@@ -2,10 +2,9 @@ import { defineConfig } from "astro/config";
 import tailwind from "@astrojs/tailwind";
 import { astroImageTools } from "astro-imagetools";
 import sitemap from "@astrojs/sitemap";
-import solid from "@astrojs/solid-js";
 import partytown from "@astrojs/partytown";
 
-import solidJs from "@astrojs/solid-js";
+import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,5 +14,5 @@ export default defineConfig({
     }
   },
   site: "https://psykip.vercel.app",
-  integrations: [solid(), astroImageTools, sitemap(), partytown(), tailwind(), solidJs()]
+  integrations: [astroImageTools, sitemap(), partytown(), tailwind(), react()]
 });

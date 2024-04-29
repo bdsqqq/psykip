@@ -1,37 +1,37 @@
-import { createSignal, createEffect } from "solid-js";
+import { useEffect, useState } from "react";
 
 export default function CopyChapterContent({
   contentId,
 }: {
   contentId: string;
 }) {
-  const [isSuccess, setIsSuccess] = createSignal(false);
-  createEffect(() => {
+  const [isSuccess, setIsSuccess] = useState(false);
+  useEffect(() => {
     //TODO: clear timeout when this runs so the checkmark timing keeps getting reset when people click a lot
-    if (!isSuccess()) return;
+    if (!isSuccess) return;
 
     setTimeout(() => {
       setIsSuccess(false);
     }, 2000);
-  });
+  }, [isSuccess]);
 
-  createEffect(() => {
+  useEffect(() => {
     // To make sure this button only appears when JS is enabled, let's start with it hidden and use JS to show it.
 
     const copyButton = document.getElementById(`${contentId}-copy`);
     copyButton?.classList.remove("pointer-events-none");
     copyButton?.classList.remove("opacity-0");
     copyButton?.classList.add("opacity-100");
-  });
+  }, []);
 
   return (
     <div
       id={`${contentId}-copy`}
-      class="relative pointer-events-none opacity-0 transition-opacity flex flex-col sm:flex-row items-center gap-1"
+      className="relative pointer-events-none opacity-0 transition-opacity flex flex-col sm:flex-row items-center gap-1"
     >
       <button
         title="Copy chapter content"
-        class="-m-2 p-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-600 dark:hover:text-zinc-200 transition-colors cursor-copy outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 dark:ring-offset-zinc-900 ring-offset-2"
+        className="-m-2 p-2 text-zinc-500 hover:text-zinc-900 dark:text-zinc-600 dark:hover:text-zinc-200 transition-colors cursor-copy outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 dark:ring-offset-zinc-900 ring-offset-2"
         onClick={async () => {
           try {
             const textContent = document.getElementById(contentId)?.innerText;
@@ -45,11 +45,11 @@ export default function CopyChapterContent({
           }
         }}
       >
-        {!isSuccess() ? <ClipboardCopy /> : <CheckmarkSvg />}
+        {!isSuccess ? <ClipboardCopy /> : <CheckmarkSvg />}
       </button>
       <span
-        class={`absolute -m-2 top-4 sm:top-1 sm:left-6 transform-gpu transition-all pointer-events-none select-none ${
-          isSuccess()
+        className={`absolute -m-2 top-4 sm:top-1 sm:left-6 transform-gpu transition-all pointer-events-none select-none ${
+          isSuccess
             ? "translate-y-0 sm:-translate-x-0 opacity-100"
             : "-translate-y-2 sm:translate-y-0 sm:-translate-x-2 opacity-0"
         }`}
@@ -63,7 +63,7 @@ export default function CopyChapterContent({
 function ClipboardCopy() {
   return (
     <svg
-      class="translate-y-[1px]"
+      className="translate-y-[1px]"
       width="15"
       height="15"
       viewBox="0 0 15 15"
@@ -83,7 +83,7 @@ function ClipboardCopy() {
 function CheckmarkSvg() {
   return (
     <svg
-      class="translate-y-[1px]"
+      className="translate-y-[1px]"
       width="15"
       height="15"
       viewBox="0 0 15 15"

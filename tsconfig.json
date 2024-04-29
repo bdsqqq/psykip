@@ -8,8 +8,8 @@
     "noEmit": true,
     "strict": true,
     "verbatimModuleSyntax": true,
-    "jsxImportSource": "solid-js",
-    "jsx": "preserve",
+    "jsxImportSource": "react",
+    "jsx": "react-jsx",
     "strictNullChecks": true
   }
 }

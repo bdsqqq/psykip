@@ -11,19 +11,22 @@
   },
   "devDependencies": {
     "@astrojs/partytown": "^1.2.3",
-    "@astrojs/solid-js": "^4.1.0",
     "astro": "^4.7.0",
     "prettier": "^2.8.8",
     "prettier-plugin-astro": "^0.5.5",
-    "solid-js": "^1.8.17",
     "tailwind-scrollbar": "^2.1.0"
   },
   "dependencies": {
+    "@astrojs/react": "^3.3.1",
     "@astrojs/sitemap": "^1.4.0",
     "@astrojs/tailwind": "^5.1.0",
     "@fontsource/roboto-slab": "^4.5.11",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "astro-icon": "^0.7.3",
     "astro-imagetools": "^0.6.17",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "tailwindcss": "^3.4.3"
   }
 }
