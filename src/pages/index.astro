@@ -1,6 +1,6 @@
 ---
 import Base from "../layouts/base.astro";
-import epictetus from "/img/dither_epictetus_tw_colors.png";
+import { Image } from 'astro:assets';
 
 import { Icon } from "astro-icon";
 import Read from "../components/Read.astro";
@@ -38,11 +38,13 @@ import Read from "../components/Read.astro";
       class="col-start-6 col-end-[9] sm:col-start-10 sm:col-end-[16] row-start-[-1] row-end-1 self-end justify-self-end aspect-[3/4] max-h-[40vh] lg:max-h-[70vh]"
     >
       <figure class="relative h-full bg-zinc-200 dark:bg-zinc-900">
-        <img
+        <Image
           loading="eager"
           class="h-full w-full object-cover"
-          src={epictetus}
+          src="/img/dither_epictetus_tw_colors.png"
           alt="stoic philosopher Epictetus"
+          height={400}
+          width={600}
         />
       </figure>
     </div>
