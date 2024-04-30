@@ -17,6 +17,7 @@
     "tailwind-scrollbar": "^2.1.0"
   },
   "dependencies": {
+    "@ariakit/react": "^0.4.6",
     "@astrojs/react": "^3.3.1",
     "@astrojs/sitemap": "^1.4.0",
     "@astrojs/tailwind": "^5.1.0",
