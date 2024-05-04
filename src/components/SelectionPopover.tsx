@@ -1,6 +1,6 @@
 import * as Ariakit from '@ariakit/react';
 import { useEffect, useRef } from 'react';
-
+import { BookmarkIcon, BookmarkFilledIcon, ClipboardCopyIcon, Share2Icon } from '@radix-ui/react-icons';
 
 function hasSelectionWithin(element?: Element | null) {
     const selection = element?.ownerDocument.getSelection();
@@ -53,7 +53,7 @@ export const SelectionPopover = ({ children }: { children: React.ReactNode }) =>
             !hasSelectionWithin(paragraphRef.current)
           }
           ref={popoverRef}
-          className="bg-zinc-900 border border-zinc-600 shadow-sm rounded p-1"
+          className="bg-zinc-200 border-zinc-400 dark:bg-zinc-800 border dark:border-zinc-600 shadow-sm rounded"
           getAnchorRect={() => {
             const selection =
               paragraphRef.current?.ownerDocument.getSelection();
@@ -63,13 +63,22 @@ export const SelectionPopover = ({ children }: { children: React.ReactNode }) =>
           }}
         >
           <Ariakit.PopoverArrow size={24} className="arrow" />
-          <Ariakit.Button className="button secondary">Bookmark</Ariakit.Button>
-          <Ariakit.Button className="button secondary">Edit</Ariakit.Button>
-          <Ariakit.Button className="button secondary">Share</Ariakit.Button>
+          <div className='flex gap-2 p-1.5'>
+          <Ariakit.Button title="Bookmark" className="flex -m-2 p-2 text-zinc-700 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors outline-none focus-visible:ring-2 ring-zinc-700 ring-offset-zinc-100 dark:ring-offset-zinc-900 ring-offset-2">
+            <BookmarkIcon />
+          </Ariakit.Button>
+          
+          <Ariakit.Button title="Share" className="flex -m-2 p-2 text-zinc-700 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors outline-none focus-visible:ring-2 ring-zinc-700 ring-offset-zinc-100 dark:ring-offset-zinc-900 ring-offset-2">
+            <Share2Icon />
+          </Ariakit.Button>
+
+          <Ariakit.Button title="Copy" className="flex -m-2 p-2 text-zinc-700 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors outline-none focus-visible:ring-2 ring-zinc-700 ring-offset-zinc-100 dark:ring-offset-zinc-900 ring-offset-2">
+            <ClipboardCopyIcon />
+          </Ariakit.Button>
+          </div>
         </Ariakit.Popover>
       </Ariakit.PopoverProvider>
             {children}
         </div>
     );
 };
-
