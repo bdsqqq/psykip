@@ -43,10 +43,7 @@ const { title, description } = Astro.props as Props;
         <slot />
       </SelectionPopover>
       <div class="fixed bottom-0 left-4">
-        <Sheet client:only>
-          <BookmarksList client:only />
-        </Sheet>
-      </div>
+        <Sheet client:only />      </div>
     <style>
       @supports (font-variation-settings: normal) {
         body {
