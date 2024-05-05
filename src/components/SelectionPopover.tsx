@@ -122,6 +122,7 @@ export const SelectionPopover = withQueryClient(({ children }: { children: React
                 comment: "",
                 translationCode: translation,
                 lastUpdated: new Date().getTime(),
+                active: true,
               }
 
               mutateAddBookmark(bookmark);
@@ -225,13 +226,34 @@ type Bookmark = {
   comment: string;
   translationCode: string;
   lastUpdated: number;
+  active: boolean;
 }
 type Bookmarks = Array<Bookmark>;
 
 const addBookmark = async (bookmark: Bookmark) => {
-  const bookmarks: Bookmarks = await getBookmarks();
+  const bookmarks: Bookmarks = await getActiveBookmarks();
   bookmarks.push(bookmark);
   setBookmarks(bookmarks);
+}
+
+const updateBookmark = async (id: string, bookmark: Bookmark) => {
+  const bookmarks: Bookmarks = await getActiveBookmarks();
+  const index = bookmarks.findIndex((b) => b.id === id);
+  if (index !== -1) {
+    bookmarks[index] = bookmark;
+  }
+  setBookmarks(bookmarks);
+}
+
+const removeBookmark = async (id: string) => {
+  const bookmarks: Bookmarks = await getActiveBookmarks();
+  const index = bookmarks.findIndex((b) => b.id === id);
+  if (index !== -1) {
+    bookmarks[index] = {
+      ...bookmarks[index],
+      active: false,
+    }
+  }
 }
 
 const getBookmarks = async () => {
@@ -241,6 +263,11 @@ const getBookmarks = async () => {
   }
   const bookmarks: Bookmarks = JSON.parse(bookmarksString);
   return bookmarks;
+}
+
+const getActiveBookmarks = async () => {
+  const bookmarks = await getBookmarks();
+  return bookmarks.filter((b) => b.active);
 }
 
 const setBookmarks = (bookmarks: Bookmarks) => {
@@ -261,13 +288,28 @@ const useAddBookmark = () => {
   return mutate;
 }
 
+const useRemoveBookmark = () => {
+ const queryClient = useQueryClient()
+
+  const { mutate } = useMutation({
+    mutationFn: removeBookmark,
+    mutationKey: ["removeBookmarks"],
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ["bookmarks"]});
+    },
+  })
+  return mutate;
+}
+
 const getBookmark = async (id: string) => {
-  const bookmarks = await getBookmarks();
+  const bookmarks = await getActiveBookmarks();
   return bookmarks.find((bookmark) => bookmark.id === id);
 }
 
 export const BookmarksList = withQueryClient(() => {
-  const {data: bookmarks, isLoading} = useQuery({ queryKey: ['bookmarks'], queryFn: getBookmarks });
+  const {data: bookmarks, isLoading} = useQuery({ queryKey: ['bookmarks'], queryFn: getActiveBookmarks });
+  const removeBookmark = useRemoveBookmark();
+
 
   if (isLoading) return <div>Loading...</div>;
   if (!bookmarks || bookmarks.length === 0) return (
@@ -297,7 +339,7 @@ export const BookmarksList = withQueryClient(() => {
             <p className='line-clamp-2'>{bookmark.text}</p>
           </a>
           <button className='opacity-30 hover:opacity-100 focus:opacity-100 transition-opacity' onClick={() => {
-            // removeBookmark(bookmark.id);
+            removeBookmark(bookmark.id);
           }}>
             <TrashIcon />
           </button>
