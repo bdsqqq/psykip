@@ -252,3 +252,4 @@ const getBookmark = async (id: string) => {
 // then merge this to main, and start work on getting react query wrapping around it, then make users (thanks clerk), then make bookmarks sync seemlessly with turso for logged users. then MAYBE wall syncing behind a paywall(if you do it, you should let users export and import their bookmarks for free).
 // You probably wanna do dep injection for the bookmarks getting/setting. 
 //  and you probably need some API routers to interact with turso when logged in.
+// and if there's time, steal the nav from that folio lois sent on discord, and possibly put bookmaks there.
