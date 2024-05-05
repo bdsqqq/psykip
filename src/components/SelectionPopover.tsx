@@ -308,8 +308,8 @@ import * as Collapsible from '@radix-ui/react-collapsible';
 export const Sheet = ({ children }: { children: React.ReactNode }) => {
   
   return (
-    <Collapsible.Root className='bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-200 w-min data-[state="open"]:w-full md:data-[state=open]:w-96'>
-      <Collapsible.Trigger className='sticky top-0 bg-zinc-100 dark:bg-zinc-900 p-2 w-full flex justify-between items-center border-b border-zinc-300 dark:border-zinc-700'>
+    <Collapsible.Root className='bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-200 w-min data-[state="open"]:w-full md:data-[state=open]:w-96 animate-in slide-in-from-bottom-8 rounded-t-lg overflow-auto shadow-md border border-zinc-300 dark:border-zinc-700 border-b-zinc-100 dark:border-b-zinc-900 max-h-[70svh]'>
+      <Collapsible.Trigger className='sticky top-0 bg-zinc-100 dark:bg-zinc-900 p-1 px-1.5 w-full flex justify-between items-center border-b border-zinc-300 dark:border-zinc-700'>
         <span className='flex items-center gap-1'>
           <BookmarkFilledIcon /> Bookmarks
         </span>
