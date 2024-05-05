@@ -14,7 +14,8 @@
     "astro": "^4.7.0",
     "prettier": "^2.8.8",
     "prettier-plugin-astro": "^0.5.5",
-    "tailwind-scrollbar": "^2.1.0"
+    "tailwind-scrollbar": "^2.1.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "dependencies": {
     "@ariakit/react": "^0.4.6",
