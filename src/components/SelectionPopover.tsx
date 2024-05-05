@@ -2,6 +2,8 @@ import * as Ariakit from '@ariakit/react';
 import { useEffect, useRef } from 'react';
 import { BookmarkIcon, BookmarkFilledIcon, ClipboardCopyIcon, Share2Icon } from '@radix-ui/react-icons';
 import { translatorNamesByCode } from '../data/codes';
+import { useQuery } from '@tanstack/react-query';
+import { withQueryClient } from './TanstackQuery';
 
 function hasSelectionWithin(element?: Element | null) {
     const selection = element?.ownerDocument.getSelection();
@@ -246,6 +248,55 @@ const setBookmarks = async (bookmarks: Bookmarks) => {
 const getBookmark = async (id: string) => {
   const bookmarks = await getBookmarks();
   return bookmarks.find((bookmark) => bookmark.id === id);
+}
+
+export const BookmarksList = withQueryClient(() => {
+  const {data: bookmarks, isLoading} = useQuery({ queryKey: ['bookmarks'], queryFn: getBookmarks });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (!bookmarks) return <div>No bookmarks found</div>;
+
+  return (
+    <ul className='flex flex-col gap-4'>
+      {bookmarks.map((bookmark) => (
+        <li key={bookmark.id}>
+          <a href={`/read/${bookmark.translationCode}/${bookmark.chapterStart}`}>
+            <div className='flex items-center gap-2'>
+            {/* @ts-ignore - I know the translation code will be valid */}
+            <span className='font-semibold'>{translatorNamesByCode[bookmark.translationCode]}</span>
+            {
+              bookmark.chapterStart !== bookmark.chapterEnd ? (
+                <span className='text-zinc-500 dark:text-zinc-400'>
+                  {bookmark.chapterStart}-{bookmark.chapterEnd}
+                </span>
+              ) : <span className='text-zinc-500 dark:text-zinc-400'>{bookmark.chapterStart}</span>
+            }
+            </div>
+            <p className='line-clamp-2'>{bookmark.text}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+})
+
+
+import * as Collapsible from '@radix-ui/react-collapsible';
+
+export const Sheet = ({ children }: { children: React.ReactNode }) => {
+  
+  return (
+    <Collapsible.Root className='bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-200 w-min data-[state="open"]:w-full md:data-[state=open]:w-96'>
+      <Collapsible.Trigger className='p-2 w-full flex justify-between items-center border-b border-zinc-300 dark:border-zinc-700'>
+        <span className='flex items-center gap-1'>
+          <BookmarkFilledIcon /> Bookmarks
+        </span>
+      </Collapsible.Trigger>
+      <Collapsible.Content className='p-2 w-full'>
+        {children}
+      </Collapsible.Content>
+    </Collapsible.Root>
+  )
 }
 
 // you had just got bookmarks saving to local storage, now you want to display them, don't worry too much about it, just make it work.
