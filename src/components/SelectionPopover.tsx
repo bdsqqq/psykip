@@ -247,3 +247,8 @@ const getBookmark = async (id: string) => {
   const bookmarks = await getBookmarks();
   return bookmarks.find((bookmark) => bookmark.id === id);
 }
+
+// you had just got bookmarks saving to local storage, now you want to display them, don't worry too much about it, just make it work.
+// then merge this to main, and start work on getting react query wrapping around it, then make users (thanks clerk), then make bookmarks sync seemlessly with turso for logged users. then MAYBE wall syncing behind a paywall(if you do it, you should let users export and import their bookmarks for free).
+// You probably wanna do dep injection for the bookmarks getting/setting. 
+//  and you probably need some API routers to interact with turso when logged in.
