@@ -2,7 +2,7 @@ import * as Ariakit from '@ariakit/react';
 import { useEffect, useRef } from 'react';
 import { BookmarkIcon, BookmarkFilledIcon, ClipboardCopyIcon, Share2Icon } from '@radix-ui/react-icons';
 import { translatorNamesByCode } from '../data/codes';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { withQueryClient } from './TanstackQuery';
 
 function hasSelectionWithin(element?: Element | null) {
@@ -14,11 +14,13 @@ function hasSelectionWithin(element?: Element | null) {
 }
   
 
-export const SelectionPopover = ({ children }: { children: React.ReactNode }) => {
+export const SelectionPopover = withQueryClient(({ children }: { children: React.ReactNode }) => {
     const popoverRef = useRef<HTMLDivElement>(null);
     const paragraphRef = useRef<HTMLParagraphElement>(null);
   
     const popover = Ariakit.usePopoverStore();
+
+    const mutateAddBookmark = useAddBookmark();
   
     useEffect(() => {
         const popoverContainer = popoverRef.current;
@@ -122,7 +124,7 @@ export const SelectionPopover = ({ children }: { children: React.ReactNode }) =>
                 lastUpdated: new Date().getTime(),
               }
 
-              saveBookmark(bookmark);
+              mutateAddBookmark(bookmark);
             }
 
           }} title="Bookmark" className="flex -m-2 p-2 text-zinc-700 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors outline-none focus-visible:ring-2 ring-zinc-700 ring-offset-zinc-100 dark:ring-offset-zinc-900 ring-offset-2">
@@ -138,7 +140,7 @@ export const SelectionPopover = ({ children }: { children: React.ReactNode }) =>
             {children}
         </div>
     );
-};
+});
 
 /**
  * Collapse whitespaces to a single space.
@@ -226,10 +228,10 @@ type Bookmark = {
 }
 type Bookmarks = Array<Bookmark>;
 
-const saveBookmark = async (bookmark: Bookmark) => {
+const addBookmark = async (bookmark: Bookmark) => {
   const bookmarks: Bookmarks = await getBookmarks();
   bookmarks.push(bookmark);
-  await setBookmarks(bookmarks);
+  setBookmarks(bookmarks);
 }
 
 const getBookmarks = async () => {
@@ -241,8 +243,22 @@ const getBookmarks = async () => {
   return bookmarks;
 }
 
-const setBookmarks = async (bookmarks: Bookmarks) => {
-  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+const setBookmarks = (bookmarks: Bookmarks) => {
+  return localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+}
+
+const useAddBookmark = () => {
+ const queryClient = useQueryClient()
+
+
+  const { mutate } = useMutation({
+    mutationFn: addBookmark,
+    mutationKey: ["addBookmarks"],
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ["bookmarks"]});
+    },
+  })
+  return mutate;
 }
 
 const getBookmark = async (id: string) => {
@@ -254,7 +270,13 @@ export const BookmarksList = withQueryClient(() => {
   const {data: bookmarks, isLoading} = useQuery({ queryKey: ['bookmarks'], queryFn: getBookmarks });
 
   if (isLoading) return <div>Loading...</div>;
-  if (!bookmarks) return <div>No bookmarks found</div>;
+  if (!bookmarks || bookmarks.length === 0) return (
+    <div>
+      <p className='text-zinc-500 dark:text-zinc-400'>No bookmarks found</p>
+
+      <p className=''>Highlight a section in a chapter and click <BookmarkIcon className='inline' /> to add it to your bookmarks</p>
+    </div>
+  )
 
   return (
     <ul className='flex flex-col gap-4'>
@@ -287,7 +309,7 @@ export const Sheet = ({ children }: { children: React.ReactNode }) => {
   
   return (
     <Collapsible.Root className='bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-200 w-min data-[state="open"]:w-full md:data-[state=open]:w-96'>
-      <Collapsible.Trigger className='p-2 w-full flex justify-between items-center border-b border-zinc-300 dark:border-zinc-700'>
+      <Collapsible.Trigger className='sticky top-0 bg-zinc-100 dark:bg-zinc-900 p-2 w-full flex justify-between items-center border-b border-zinc-300 dark:border-zinc-700'>
         <span className='flex items-center gap-1'>
           <BookmarkFilledIcon /> Bookmarks
         </span>
