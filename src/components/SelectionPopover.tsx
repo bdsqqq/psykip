@@ -115,7 +115,7 @@ export const SelectionPopover = withQueryClient(({ children }: { children: React
               const footer = `The Enchiridion, ${chapterText} — translation by ${translatorNamesByCode[translation as keyof typeof translatorNamesByCode]}`;       
 
               const bookmark: Bookmark = {
-                id: new Date().getTime().toString(),
+                id: newId("bookmark"),
                 chapterStart: startChapter,
                 chapterEnd: endChapter,
                 text: textContent,
@@ -304,6 +304,7 @@ export const BookmarksList = withQueryClient(() => {
 
 
 import * as Collapsible from '@radix-ui/react-collapsible';
+import { newId } from '../lib/id';
 
 export const Sheet = ({ children }: { children: React.ReactNode }) => {
   
