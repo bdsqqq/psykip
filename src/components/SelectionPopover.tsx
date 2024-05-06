@@ -254,6 +254,7 @@ const removeBookmark = async (id: string) => {
       active: false,
     }
   }
+  setBookmarks(bookmarks);
 }
 
 const getBookmarks = async () => {
