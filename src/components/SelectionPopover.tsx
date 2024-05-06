@@ -1,7 +1,7 @@
 import * as Ariakit from '@ariakit/react';
 import { useEffect, useRef, useState } from 'react';
 import { BookmarkIcon, BookmarkFilledIcon, ClipboardCopyIcon, Share2Icon, TrashIcon, EyeClosedIcon, Cross1Icon, FilePlusIcon, DownloadIcon } from '@radix-ui/react-icons';
-import { translatorNamesByCode } from '../data/codes';
+import { translatorNamesByCode, type TranslationCode } from '../data/codes';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { withQueryClient } from './TanstackQuery';
 
@@ -116,13 +116,14 @@ export const SelectionPopover = withQueryClient(({ children }: { children: React
 
               const bookmark: Bookmark = {
                 id: newId("bookmark"),
-                chapterStart: startChapter,
-                chapterEnd: endChapter,
+                chapterStart: startChapter.toString(),
+                chapterEnd: endChapter.toString(),
                 text: textContent,
                 comment: "",
-                translationCode: translation,
-                lastUpdated: new Date().getTime(),
-                active: true,
+                translationCode: translation as TranslationCode,
+                lastUpdated: new Date().getTime().toString(),
+                active: "true",
+                userId: "69420"
               }
 
               mutateAddBookmark(bookmark);
@@ -218,15 +219,16 @@ const cleanTextContentFromRange = (range: Range): string => {
 };  
 
 // Bookmark stuff
-type Bookmark = {
+export type Bookmark = {
   id: string;
-  chapterStart: number;
-  chapterEnd: number;
+  chapterStart: string;
+  chapterEnd: string;
   text: string;
   comment: string;
-  translationCode: string;
-  lastUpdated: number;
-  active: boolean;
+  translationCode: TranslationCode;
+  lastUpdated: string;
+  active: "true" | "false";
+  userId: string;
 }
 type Bookmarks = Array<Bookmark>;
 
@@ -252,7 +254,7 @@ const LocalStorageRemoveBookmark = async (id: string) => {
   if (index !== -1) {
     bookmarks[index] = {
       ...bookmarks[index],
-      active: false,
+      active: "false",
     }
   }
   LocalStorageSetBookmarksHelper(bookmarks);
@@ -269,7 +271,7 @@ const LocalStorageGetBookmarks = async () => {
 
 const LocalStorageGetActiveBookmarks = async () => {
   const bookmarks = await LocalStorageGetBookmarks();
-  return bookmarks.filter((b) => b.active);
+  return bookmarks.filter((b) => b.active === "true");
 }
 
 const LocalStorageSetBookmarksHelper = (bookmarks: Bookmarks) => {
