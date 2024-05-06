@@ -20,7 +20,7 @@ export const SelectionPopover = withQueryClient(({ children }: { children: React
   
     const popover = Ariakit.usePopoverStore();
 
-    const mutateAddBookmark = useAddBookmark();
+    const mutateAddBookmark = useAddBookmark(LocalStorageAddBookmark);
   
     useEffect(() => {
         const popoverContainer = popoverRef.current;
@@ -217,7 +217,7 @@ const cleanTextContentFromRange = (range: Range): string => {
   return replaceMultipleSpacesWithSingleSpace(textContent).trim();
 };  
 
-
+// Bookmark stuff
 type Bookmark = {
   id: string;
   chapterStart: number;
@@ -230,23 +230,24 @@ type Bookmark = {
 }
 type Bookmarks = Array<Bookmark>;
 
-const addBookmark = async (bookmark: Bookmark) => {
-  const bookmarks: Bookmarks = await getActiveBookmarks();
+// LocalStorage bookmark impl
+const LocalStorageAddBookmark = async (bookmark: Bookmark) => {
+  const bookmarks: Bookmarks = await LocalStorageGetActiveBookmarks();
   bookmarks.push(bookmark);
-  setBookmarks(bookmarks);
+  LocalStorageSetBookmarksHelper(bookmarks);
 }
 
-const updateBookmark = async (id: string, bookmark: Bookmark) => {
-  const bookmarks: Bookmarks = await getActiveBookmarks();
+const LocalStorageUpdateBookmark = async (id: string, bookmark: Bookmark) => {
+  const bookmarks: Bookmarks = await LocalStorageGetActiveBookmarks();
   const index = bookmarks.findIndex((b) => b.id === id);
   if (index !== -1) {
     bookmarks[index] = bookmark;
   }
-  setBookmarks(bookmarks);
+  LocalStorageSetBookmarksHelper(bookmarks);
 }
 
-const removeBookmark = async (id: string) => {
-  const bookmarks: Bookmarks = await getActiveBookmarks();
+const LocalStorageRemoveBookmark = async (id: string) => {
+  const bookmarks: Bookmarks = await LocalStorageGetActiveBookmarks();
   const index = bookmarks.findIndex((b) => b.id === id);
   if (index !== -1) {
     bookmarks[index] = {
@@ -254,10 +255,10 @@ const removeBookmark = async (id: string) => {
       active: false,
     }
   }
-  setBookmarks(bookmarks);
+  LocalStorageSetBookmarksHelper(bookmarks);
 }
 
-const getBookmarks = async () => {
+const LocalStorageGetBookmarks = async () => {
   const bookmarksString = localStorage.getItem("bookmarks");
   if (!bookmarksString) {
     return [];
@@ -266,18 +267,26 @@ const getBookmarks = async () => {
   return bookmarks;
 }
 
-const getActiveBookmarks = async () => {
-  const bookmarks = await getBookmarks();
+const LocalStorageGetActiveBookmarks = async () => {
+  const bookmarks = await LocalStorageGetBookmarks();
   return bookmarks.filter((b) => b.active);
 }
 
-const setBookmarks = (bookmarks: Bookmarks) => {
+const LocalStorageSetBookmarksHelper = (bookmarks: Bookmarks) => {
   return localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
 }
 
-const useAddBookmark = () => {
- const queryClient = useQueryClient()
+// Turso bookmark impl
 
+// react query bookmark impl, inject dep depending on what you want,
+const useGetBookmarks = (getBookmarks: () => Promise<Bookmark[]>) => {
+  const queryClient = useQueryClient()
+ 
+   return useQuery({ queryKey: ['bookmarks'], queryFn: getBookmarks })
+ }
+
+const useAddBookmark = (addBookmark: (bookmark: Bookmark) => Promise<void>) => {
+ const queryClient = useQueryClient()
 
   const { mutate } = useMutation({
     mutationFn: addBookmark,
@@ -289,7 +298,7 @@ const useAddBookmark = () => {
   return mutate;
 }
 
-const useRemoveBookmark = () => {
+const useRemoveBookmark = (removeBookmark: (id: string) => Promise<void>) => {
  const queryClient = useQueryClient()
 
   const { mutate } = useMutation({
@@ -302,14 +311,9 @@ const useRemoveBookmark = () => {
   return mutate;
 }
 
-const getBookmark = async (id: string) => {
-  const bookmarks = await getActiveBookmarks();
-  return bookmarks.find((bookmark) => bookmark.id === id);
-}
-
 export const BookmarksList = withQueryClient(() => {
-  const {data: bookmarks, isLoading} = useQuery({ queryKey: ['bookmarks'], queryFn: getActiveBookmarks });
-  const removeBookmark = useRemoveBookmark();
+  const {data: bookmarks, isLoading} = useGetBookmarks(LocalStorageGetActiveBookmarks);
+  const removeBookmark = useRemoveBookmark(LocalStorageRemoveBookmark);
 
 
   if (isLoading) return <div>Loading...</div>;
