@@ -16,7 +16,7 @@ export default defineConfig({
     }
   },
   site: "https://psykip.vercel.app",
-  integrations: [astroImageTools, sitemap(), partytown(), tailwind(), react(), clerk()],
+  integrations: [astroImageTools, sitemap(), partytown(), tailwind(), react()],
   output: "server",
   adapter: node({
     mode: "standalone"
