@@ -1,6 +1,6 @@
 import * as Ariakit from '@ariakit/react';
 import { useEffect, useRef, useState } from 'react';
-import { BookmarkIcon, BookmarkFilledIcon, ClipboardCopyIcon, Share2Icon, TrashIcon } from '@radix-ui/react-icons';
+import { BookmarkIcon, BookmarkFilledIcon, ClipboardCopyIcon, Share2Icon, TrashIcon, EyeClosedIcon, Cross1Icon, FilePlusIcon, DownloadIcon } from '@radix-ui/react-icons';
 import { translatorNamesByCode } from '../data/codes';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { withQueryClient } from './TanstackQuery';
@@ -355,23 +355,30 @@ import * as Collapsible from '@radix-ui/react-collapsible';
 import { newId } from '../lib/id';
 
 export const Sheet = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const open = () => setIsOpen(true);
-  const close = () => setIsOpen(false);
-
   return (
     <Collapsible.Root
-      open={isOpen}
-     className='bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-200 w-min data-[state="open"]:w-full md:data-[state=open]:w-96 animate-in slide-in-from-bottom-8 rounded-t-lg overflow-auto shadow-md border border-zinc-300 dark:border-zinc-700 border-b-zinc-100 dark:border-b-zinc-900 max-h-[70svh]'>
-      <Collapsible.Trigger onClick={() => {
-        !isOpen && open();
-      }} className='sticky top-0 bg-zinc-100 dark:bg-zinc-900 p-1 px-1.5 w-full flex justify-between items-center border-b border-zinc-300 dark:border-zinc-700'>
+      className='bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-200 w-min data-[state="open"]:w-full md:data-[state=open]:w-96 animate-in slide-in-from-bottom-8 rounded-t-lg overflow-auto shadow-md border border-zinc-300 dark:border-zinc-700 border-b-zinc-100 dark:border-b-zinc-900 max-h-[70svh]'>
+      <Collapsible.Trigger className='sticky top-0 bg-zinc-100 dark:bg-zinc-900 p-1 px-1.5 w-full flex justify-between items-center border-b border-zinc-300 dark:border-zinc-700'>
         <span className='flex items-center gap-1'>
           <BookmarkFilledIcon /> Bookmarks
         </span>
       </Collapsible.Trigger>
-      <Collapsible.Content className='p-2 w-full'>
-        <BookmarksList/>
+      <Collapsible.Content className='w-full'>
+        {/* <div className='border-y flex gap-4 items-center border-t-transparent border-b-zinc-300 dark:border-b-zinc-700 py-1 px-2'>
+          <a href="/bookmarks">
+            view all bookmarks
+          </a>
+          <button title='Import bookmarks from file' className='p-2 -m-2 opacity-30 hover:opacity-100 focus:opacity-100 transition-opacity'>
+            <FilePlusIcon />
+          </button>
+
+          <button title='Export bookmarks to file' className='p-2 -m-2 opacity-30 hover:opacity-100 focus:opacity-100 transition-opacity'>
+            <DownloadIcon />
+          </button>
+        </div> */}
+        <div className='p-2'>
+          <BookmarksList/>
+        </div>
       </Collapsible.Content>
     </Collapsible.Root>
   )
