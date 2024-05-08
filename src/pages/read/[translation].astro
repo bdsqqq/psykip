@@ -56,10 +56,9 @@ const MDs = await getCollection("translations", ({ data }) => {
         MDs.map(async (MD, i) => {
           const { Content } = await MD.render()
           return (
-          <div data-chapter={i + 1}>
+          <div data-translation={translation} data-chapter={i + 1}>
             <Chapter
               translationCode={translation}
-              // TODO: I mean, look at this shit, how many props do you need???
               chapterNumber={MD.data.Chapter}
               chapterHead={MD.data.Chapter}
               chapterHeadId={MD.data.Chapter}
@@ -79,7 +78,7 @@ const MDs = await getCollection("translations", ({ data }) => {
     />
   </div>
 </Base>
-<script client:load>
+<script>
   const translation = window.location.href
     .split("/")
     .slice(-1)[0]
@@ -97,14 +96,14 @@ const MDs = await getCollection("translations", ({ data }) => {
       console.log("couldn't find #continueToolbar");
     }
 
-    const continueCTA = document.querySelector("#continueCTA");
+    const continueCTA = document.querySelector<HTMLAnchorElement>("#continueCTA");
     if (continueCTA) {
       continueCTA.href = `#${readUpTo}`;
     } else {
       console.log("couldn't find #continueCTA");
     }
 
-    const continueCTALabel = document.querySelector("#continueCTALabel");
+    const continueCTALabel = document.querySelector<HTMLSpanElement>("#continueCTALabel");
     if (continueCTALabel) {
       continueCTALabel.innerText = `Continue from chapter ${readUpTo}`;
     } else {
@@ -126,7 +125,7 @@ const MDs = await getCollection("translations", ({ data }) => {
 
     if (!!readUpTo && !!eraseProgressCTA && !!continueCTA) {
       localStorage.removeItem(translation);
-      readUpTo = 0;
+      readUpTo = "0";
 
       continueCTA.classList.remove("opacity-100");
       continueCTA.classList.add("opacity-0");

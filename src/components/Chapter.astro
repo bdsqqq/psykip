@@ -34,11 +34,16 @@ const {
         !colOnly ? "sm:flex-col sm:max-w-[10ch]" : "sm:max-w-none"
       }`}
     >
-      <h2 id={`${chapterHeadId}`} class="text-2xl font-thin">
+      <span class="hidden">
+        <!-- add hidden line breaks so when user copies, different chapters are separated -->
+        {"\r\n"}
+        {"\r\n"}
+      </span>
+      <h2 id={`${chapterHeadId}`} class="text-2xl font-thin select-none">
         <a
           class="outline-none focus-visible:ring-2 ring-zinc-500 ring-offset-zinc-100 dark:ring-offset-zinc-900 ring-offset-2"
           href={`#${chapterHeadId}`}
-          >{chapterHead}
+          >{chapterHead}.
         </a>
       </h2>
       <ul
@@ -73,6 +78,8 @@ const {
   </div>
   <div
     id={chapterId}
+    data-chapter={chapterNumber}
+    data-translation={translationCode}
     class="col-start-2 flex flex-col gap-4 w-full mdContainer"
   >
     <slot />
