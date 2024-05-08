@@ -40,11 +40,11 @@ const { title, description } = Astro.props as Props;
   >
     <div class="overlay"></div>
     <!-- uncomment selection popover and sheet to enable bookmarks -->
-    <!-- <SelectionPopover client:visible> -->
+    <SelectionPopover client:visible>
         <slot />
-    <!-- </SelectionPopover> -->
+    </SelectionPopover>
       <div class="fixed bottom-0 left-4">
-        <!-- <Sheet client:only />      </div> --> 
+        <Sheet client:only />      </div> 
     <style>
       @supports (font-variation-settings: normal) {
         body {

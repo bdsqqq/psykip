@@ -359,6 +359,7 @@ export const BookmarksList = withQueryClient(() => {
 
 import * as Collapsible from '@radix-ui/react-collapsible';
 import { newId } from '../lib/id';
+import { UserProfile } from 'astro-clerk-auth/components/react'
 
 export const Sheet = () => {
   return (
@@ -370,6 +371,7 @@ export const Sheet = () => {
         </span>
       </Collapsible.Trigger>
       <Collapsible.Content className='w-full'>
+      <UserProfile />
         {/* <div className='border-y flex gap-4 items-center border-t-transparent border-b-zinc-300 dark:border-b-zinc-700 py-1 px-2'>
           <a href="/bookmarks">
             view all bookmarks
