@@ -5,7 +5,6 @@ import sitemap from "@astrojs/sitemap";
 import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
 
-import clerk from "astro-clerk-auth";
 import node from "@astrojs/node";
 
 // https://astro.build/config
