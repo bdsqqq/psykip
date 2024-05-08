@@ -4,7 +4,7 @@ import { astroImageTools } from "astro-imagetools";
 import sitemap from "@astrojs/sitemap";
 import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
-import node from "@astrojs/node";
+import clerk from "astro-clerk-auth";
 
 import vercel from "@astrojs/vercel/serverless";
 
@@ -16,7 +16,10 @@ export default defineConfig({
     }
   },
   site: "https://psykip.vercel.app",
-  integrations: [astroImageTools, sitemap(), partytown(), tailwind(), react()],
+  integrations: [astroImageTools, sitemap(), partytown(), tailwind(), react(), clerk({
+    afterSignInUrl: "/",
+    afterSignOutUrl: "/",
+  })],
   output: "hybrid",
   adapter: vercel()
 });
