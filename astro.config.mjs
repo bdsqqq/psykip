@@ -16,10 +16,7 @@ export default defineConfig({
     }
   },
   site: "https://psykip.vercel.app",
-  integrations: [astroImageTools, sitemap(), partytown(), tailwind(), react(), clerk({
-    afterSignInUrl: "/",
-    afterSignOutUrl: "/",
-  })],
+  integrations: [astroImageTools, sitemap(), partytown(), tailwind(), react(), clerk()],
   output: "hybrid",
   adapter: vercel()
 });
