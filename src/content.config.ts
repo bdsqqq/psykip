@@ -1,7 +1,10 @@
-import { z, defineCollection } from "astro:content";
-import codes from "../data/codes";
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
+import codes from "./data/codes";
 
 const translations = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/translations" }),
   schema: z.object({
     Author: z.string(),
     Title: z.string(),

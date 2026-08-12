@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { Icon } from "astro-icon";
+import Icon from "./Icon.astro";
 
 const ChapterOnes = await getCollection("translations", ({ data }) => {
   return data.Chapter === 1;
@@ -89,25 +89,26 @@ const translations = ChapterOnes.map((chapterOne) => {
       @apply translate-x-1;
     }
   </style>
-  <script client:load>
-    const readCTAs = document.querySelectorAll("span[data-read-cta]");
-    const eraseProgressCTA = document.querySelector("#eraseProgressCTA");
+  <script>
+    const readCTAs = document.querySelectorAll<HTMLElement>("span[data-read-cta]");
+    const eraseProgressCTA = document.querySelector<HTMLElement>("#eraseProgressCTA");
     let someWasRead = false;
 
     readCTAs.forEach((CTA) => {
-      const translation = CTA.attributes["data-read-cta"].value;
+      const translation = CTA.dataset.readCta;
+      if (!translation) return;
       const readUpTo = localStorage.getItem(translation);
 
       if (readUpTo) {
         const slot = document.getElementById(`${translation}-slot`);
-        slot.innerText = readUpTo;
+        if (slot) slot.innerText = readUpTo;
         CTA.title = `Read up to chapter ${readUpTo}`;
         CTA.classList.remove("hidden");
         CTA.classList.add("flex");
         CTA.classList.remove("opacity-0");
         CTA.classList.add("opacity-100");
 
-        if (!someWasRead) {
+        if (!someWasRead && eraseProgressCTA) {
           console.log("some wasn't read");
           eraseProgressCTA.classList.remove("hidden");
           eraseProgressCTA.classList.add("flex");
@@ -117,18 +118,20 @@ const translations = ChapterOnes.map((chapterOne) => {
 
     const eraseProgress = () => {
       readCTAs.forEach((CTA) => {
-        const translation = CTA.attributes["data-read-cta"].value;
+        const translation = CTA.dataset.readCta;
+        if (!translation) return;
         const readUpTo = localStorage.getItem(translation);
 
         if (readUpTo) {
           localStorage.removeItem(translation);
 
           const slot = document.getElementById(`${translation}-slot`);
-          slot.innerText = readUpTo;
+          if (slot) slot.innerText = readUpTo;
           CTA.classList.remove("opacity-100");
           CTA.classList.add("opacity-0");
           CTA.classList.add("translate-x-2");
 
+          if (!eraseProgressCTA) return;
           eraseProgressCTA.textContent = "Done!";
           eraseProgressCTA.classList.add("pointer-events-none");
           eraseProgressCTA.classList.remove("underline");

@@ -1,0 +1,31 @@
+---
+import {
+  ArrowDownIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ArrowTopRightIcon,
+  PinLeftIcon,
+  ReaderIcon,
+  ViewVerticalIcon,
+} from "@radix-ui/react-icons";
+
+const icons = {
+  "radix-icons:arrow-down": ArrowDownIcon,
+  "radix-icons:arrow-left": ArrowLeftIcon,
+  "radix-icons:arrow-right": ArrowRightIcon,
+  "radix-icons:arrow-top-right": ArrowTopRightIcon,
+  "radix-icons:pin-left": PinLeftIcon,
+  "radix-icons:reader": ReaderIcon,
+  "radix-icons:view-vertical": ViewVerticalIcon,
+};
+
+type Props = {
+  name: keyof typeof icons;
+  class?: string;
+};
+
+const { name, class: className } = Astro.props as Props;
+const Icon = icons[name];
+---
+
+<Icon className={className} />

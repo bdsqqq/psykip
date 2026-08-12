@@ -1,8 +1,8 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Base from "../../layouts/base.astro";
 import Chapter from "../../components/Chapter.astro";
-import { Icon } from "astro-icon";
+import Icon from "../../components/Icon.astro";
 import type { TranslationCode } from "../../data/codes";
 import Nav from "../../components/Nav.astro";
 
@@ -43,7 +43,7 @@ const chapters = await getCollection("translations");
                 .filter((chapter) => chapter.data.Chapter == chapterNumber)
                 .sort((a, b) => (a.data.Date < b.data.Date ? 1 : -1))
                 .map(async (chapter) => {
-                  const { Content } = await chapter.render();
+                  const { Content } = await render(chapter);
 
                   return (
                     <div class="flex flex-col gap-10 justify-between md:max-w-[80vw]">
