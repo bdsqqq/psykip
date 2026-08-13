@@ -1,7 +1,7 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import type { TranslationCode } from "../../data/codes";
-import { Icon } from "astro-icon";
+import Icon from "../../components/Icon.astro";
 import Base from "../../layouts/base.astro";
 import codes from "../../data/codes";
 import Chapter from "../../components/Chapter.astro";
@@ -54,7 +54,7 @@ const MDs = await getCollection("translations", ({ data }) => {
     <div class="flex flex-col gap-24 mx-auto">
       {
         MDs.map(async (MD, i) => {
-          const { Content } = await MD.render()
+          const { Content } = await render(MD)
           return (
           <div data-translation={translation} data-chapter={i + 1}>
             <Chapter

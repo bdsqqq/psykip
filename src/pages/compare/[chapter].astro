@@ -1,9 +1,9 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import Base from "../../layouts/base.astro";
 import Chapter from "../../components/Chapter.astro";
 import type { Chapter as ChapterType } from "../../data/codes";
-import { Icon } from "astro-icon";
+import Icon from "../../components/Icon.astro";
 import Nav from "../../components/Nav.astro";
 
 export function getStaticPaths() {
@@ -41,7 +41,7 @@ const chapters = await getCollection("translations", ({ data }) => {
           chapters
             .sort((a, b) => (a.data.Date < b.data.Date ? 1 : -1))
             .map(async (chapter) => {
-              const { Content } = await chapter.render();
+              const { Content } = await render(chapter);
               return (
                 <div class="flex flex-col gap-10 justify-between md:max-w-[80vw]">
                   <Chapter

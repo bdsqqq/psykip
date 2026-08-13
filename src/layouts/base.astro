@@ -1,7 +1,6 @@
 ---
-import "@fontsource/roboto-slab/variable.css";
-import { SelectionPopover, BookmarksList, Sheet } from "../components/SelectionPopover";
-import { TanstackQueryProvider } from "../components/TanstackQuery";
+import "@fontsource-variable/roboto-slab";
+import "../styles/global.css";
 export interface Props {
   title: string;
   description: string;
@@ -39,12 +38,7 @@ const { title, description } = Astro.props as Props;
     class="min-h-screen relative bg-zinc-200 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-200 scrollbar-thin scrollbar-track-zinc-200 scrollbar-thumb-zinc-400 dark:scrollbar-track-zinc-900 dark:scrollbar-thumb-zinc-700"
   >
     <div class="overlay"></div>
-    <!-- uncomment selection popover and sheet to enable bookmarks -->
-    <!-- <SelectionPopover client:visible> -->
-        <slot />
-    <!-- </SelectionPopover> -->
-      <div class="fixed bottom-0 left-4">
-        <!-- <Sheet client:only />      </div> --> 
+    <slot />
     <style>
       @supports (font-variation-settings: normal) {
         body {

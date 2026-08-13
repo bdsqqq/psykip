@@ -1,5 +1,5 @@
 ---
-import { getEntryBySlug } from "astro:content";
+import { getEntry, render } from "astro:content";
 import Base from "../../../layouts/base.astro";
 import Chapter from "../../../components/Chapter.astro";
 import codes from "../../../data/codes";
@@ -8,7 +8,7 @@ import type {
   Chapter as ChapterType,
 } from "../../../data/codes";
 import SourceFooter from "../../../components/SourceFooter.astro";
-import { Icon } from "astro-icon";
+import Icon from "../../../components/Icon.astro";
 import Nav from "../../../components/Nav.astro";
 
 export function getStaticPaths() {
@@ -38,7 +38,7 @@ const { translation, chapter } = Astro.params as unknown as {
   chapter: ChapterType;
 };
 
-const entry = await getEntryBySlug("translations", `${translation}/${chapter}`);
+const entry = await getEntry("translations", `${translation}/${chapter}`);
 
 if (!entry) {
   console.error(`No entry found for ${translation}/${chapter}`);
@@ -47,7 +47,7 @@ if (!entry) {
   };
 }
 
-const { Content } = await entry.render();
+const { Content } = await render(entry);
 ---
 
 <Base
